@@ -1,0 +1,33 @@
+
+.add-new-expense___center{
+    width: 100vw;
+    height: 89px + 2rem;
+    /* background-color: #3f3f3f; */
+    display: flex;
+}
+
+.add-new-expense___border {
+    width: 50rem;
+    height: 89px;
+    margin: 2rem auto;
+    background-color: #A892EE;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-new-expense___btn {
+    width: 197.69px;
+    height: 57px;
+    margin-right: 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    background-color: #40005D;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    
+}
