@@ -1,6 +1,6 @@
 .expenses-main-container___center {
     width: 100vw;
-    height: 403px;
+    height: 398.5px;
     display:flex;
     justify-content: center;
 }
@@ -11,33 +11,4 @@
     padding: 1rem;
     border-radius: 12px;
     background-color: rgb(31, 31, 31);
-    display: flex;
-    justify-content: center;
-}
-
-.expenses-main-container___filter {
-    width: 736px;
-    height: 43px;
-    margin: 16px 0;
-    font-size: 16px;
-    font-weight: bold;
-    /* background-color: red; */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.expenses-main-container___filter-label {
-    font: inherit;
-    margin: 0px 0px 8px;
-    /* background-color: white; */
-    color: white;
-}
-
-.expenses-main-container___filter-dropdown{
-    font: inherit;
-    height: 43px;
-    width: 156px;
-    padding: 0.5rem 3rem;
-    border-radius: 6px;
 }

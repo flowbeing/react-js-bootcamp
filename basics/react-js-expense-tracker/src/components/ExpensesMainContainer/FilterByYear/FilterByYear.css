@@ -1,0 +1,26 @@
+.expenses-main-container___filter {
+    width: 736px;
+    height: 43px;
+    margin: 16px auto;
+    font-size: 16px;
+    font-weight: bold;
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expenses-main-container___filter-label {
+    font: inherit;
+    margin: 0px 0px 8px;
+    /* background-color: white; */
+    color: white;
+}
+
+.expenses-main-container___filter-dropdown{
+    font: inherit;
+    height: inherit;
+    width: 156px;
+    padding: 0.5rem 3rem;
+    border-radius: 6px;
+}

@@ -1,0 +1,30 @@
+.individual-chart-bar {
+    height: 128px;
+    width: 14.4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.individual-chart-bar___inner {
+    height: 116px;
+    width: 14.4px;
+    border-radius: 12px;
+    border: 1px solid #313131; 
+    background-color: #c3b4f3;
+    display: flex;
+    align-items: flex-end;
+}
+
+.individual-chart-bar___inner-percentage {
+    width: 14.4px;
+    background-color: #4826b9;
+    border-radius: 12px;
+}
+
+.individual-chart-bar___label {
+    height: 12px;
+    width: 14.4px;
+    font-size: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+}

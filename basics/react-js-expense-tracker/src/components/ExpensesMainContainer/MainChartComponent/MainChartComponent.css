@@ -1,0 +1,9 @@
+.main-chart___border {
+    height: 160px;
+    width: 768px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #f8dfff;
+    display: flex;
+    justify-content: space-around;
+}
