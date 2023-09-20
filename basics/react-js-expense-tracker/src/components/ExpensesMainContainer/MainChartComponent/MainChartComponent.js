@@ -1,74 +1,83 @@
 import {React} from "react";
 
+import ListOfExpenses from '../ListOfExpenses/ListOfExpenses';
+
 import "./MainChartComponent.css";
 
 import IndividualBarChart from "./IndividualBarChart/IndividualBarChart";
 
 const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
-    // obtaining all relevant data for the current selected year
-    let currentYearData = [];
-    let totalExpenseCurrentYear = 0;
+    console.log('');
+
+    // creating a dictionary of months and their values for the relevant filter year
+    let currentYearDataDict = {};
+
+    // obtaining the maximum monthly expense for the current filter year
+    let maximumMonthlyExpense = 0;
+
+    let monthCount = 0;
+
+    while (monthCount < 12){
+
+        let date = new Date();
+        date.setMonth(monthCount);
+
+        let monthShort = date.toLocaleString('en-US', {month: 'short'});
+
+        currentYearDataDict[monthShort] = {'total': 0, 'data': JSON.stringify('')};
+
+        monthCount += 1;
+    }
     
     for (var data of expensesData){
-        console.log(`totalExpenseCurrentYear: ${totalExpenseCurrentYear}`);
 
         let currentDataDate = data.date;
+
         let currentDataYear = currentDataDate.getFullYear().toString();
+        let currentDataMonth = currentDataDate.toLocaleString('en-US', {month: 'short'});
 
         if (currentDataYear === currentFilterYear){
-            currentYearData.push(data);
-            totalExpenseCurrentYear += data.amount;
+
+            currentYearDataDict[currentDataMonth]['total'] += data.amount;
+            currentYearDataDict[currentDataMonth]['data'] = data;
+
+            // updating the maximum monthly expense value
+            let currentMonthTotalSoFar = currentYearDataDict[currentDataMonth]['total'];
+            maximumMonthlyExpense = Math.max(maximumMonthlyExpense, currentMonthTotalSoFar);
         }
     }
 
-    console.log(currentYearData);
-    console.log(`length: ${currentYearData.length}`);
+    let monthlyIndividualChart = [];
+    // mapping individual charts for each month of the relevant year
+    for (let month in currentYearDataDict){
 
-    // CREATING (EACH) MONTH(S) OF THE YEAR CHART BAR - SHORT FORM
-    let monthNumOrIndex = 0;
-    let monthsShortForm = [];
-
-    while (monthNumOrIndex < 12){
-
-        // Determining the (current) month's short form
-        var date = new Date();
-        date.setMonth(monthNumOrIndex);
-        let monthShortForm = date.toLocaleString('en-US', {month: "short"});
-
-        // determining current month's expense and relative chart bar height
-        let currentMonthsExpenseHeightIfAny = 0;
-
-        // determining (current) month's total expense if any..
-        let totalExpenseCurrentMonth = 0;
-        for (let data of currentYearData){
-            console.log(`dataa: ${data}`);
-            let monthCurrentFilterYearData = data.date.toLocaleString('en-US', {month: "short"});
-            
-            if (monthCurrentFilterYearData == monthShortForm){
-                console.log(`data.amount:totalExpenseCurrentYear, month:year -> ${data.amount}:${totalExpenseCurrentYear} -> ${monthCurrentFilterYearData}`);
-                totalExpenseCurrentMonth += data.amount;
-            }
-        }
-
-        if (totalExpenseCurrentMonth != 0){
-            currentMonthsExpenseHeightIfAny = (totalExpenseCurrentMonth/totalExpenseCurrentYear)*100;
-        }
+        let currentMonthTotalExpense = currentYearDataDict[month]['total'];
+        let currentMonthBarChartHeightPercentage = "0%";
         
-        const currentMonthChartBar = <IndividualBarChart monthAbbreviation={monthShortForm} barHeightPercentage={currentMonthsExpenseHeightIfAny+"%"}/>
+        if (currentMonthTotalExpense > 0){
+            currentMonthBarChartHeightPercentage = ((currentYearDataDict[month]['total'] / maximumMonthlyExpense) * 100) + "%"; 
+        }
 
-        monthsShortForm.push(currentMonthChartBar);
+        monthlyIndividualChart.push(<IndividualBarChart monthAbbreviation={month} barHeightPercentage={currentMonthBarChartHeightPercentage}/>);
 
-        monthNumOrIndex += 1;
+        console.log(`${month}: ${currentYearDataDict[month]['total']}`);
+        console.log(`barChartHeight: ${currentMonthBarChartHeightPercentage}`);
     }
-
-    console.log(monthsShortForm);
 
     return (
 
-        <div className="main-chart___border">
+        <div>
 
-            {monthsShortForm}
+            <div className="main-chart___border">
+
+            {monthlyIndividualChart}
+            
+            </div>
+
+            {/* Including list of expenses in the main chart component. ExpensesMainContainer would be a better fit!  */}
+            <ListOfExpenses/>
+
 
         </div>
 

@@ -1,14 +1,16 @@
 .expenses-main-container___center {
+    /* background-color: blue; */
     width: 100vw;
-    height: 398.5px;
+    /* height: 398.5px; */
     display:flex;
     justify-content: center;
 }
 
 .expenses-main-container___border {
     width: 50rem;
-    height: 403px;
+    /* height: 403px; */
     padding: 1rem;
     border-radius: 12px;
     background-color: rgb(31, 31, 31);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }

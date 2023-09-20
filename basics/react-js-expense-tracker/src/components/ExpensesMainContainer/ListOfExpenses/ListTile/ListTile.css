@@ -1,0 +1,63 @@
+.list-tile-border {
+    width: 768px;
+    height: 104px;
+    padding: 8px;
+    border-radius: 12px;
+    background-color: #4b4b4b;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list-tile-expense-date {
+    width: 88px;
+    height: 88px;
+    border-radius: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .list-tile-description-and-amount {
+    display: flex;
+    /* flex-direction: row; */
+    /* justify-content: space-between;
+} */
+
+.list-tile-description {
+    width: 500.54px;
+    height: 29px;
+    background-color: blue;
+}
+
+.list-tile-amount {
+    width: 115.46px;
+    height: 47px;
+    background-color: green;
+}
+
+
+/* expense date contents */
+.list-tile-expense-date___month {
+    /* width: 88px; */
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.list-tile-expense-date___year {
+    /* width: 88px; */
+    font-size: 12px;
+    font-weight: normal;
+    color: white;
+}
+
+.list-tile-expense-date___day {
+    /* width: 88px; */
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}

@@ -1,0 +1,13 @@
+.default-element {
+    height: 35px;
+    width: 768px;
+    margin: 16px 0;
+    font-size: 24px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.list-of-expenses-container {
+    margin: 16px 0;
+}
