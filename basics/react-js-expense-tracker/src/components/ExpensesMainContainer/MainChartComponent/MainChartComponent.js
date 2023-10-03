@@ -10,14 +10,18 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
     console.log('');
 
-    // creating a dictionary of months and their values for the relevant filter year
+    // a map (dictionary) of months and their total expenses for the relevant filter year 
     let currentYearDataDict = {};
 
-    // obtaining the maximum monthly expense for the current filter year
+    // a map of each expense within the relevant year
+    let currentYearEachExpense = {};
+
+    // maximum monthly expense for the current filter year
     let maximumMonthlyExpense = 0;
 
     let monthCount = 0;
 
+    // populating currentYearDataDict with months & their total expenses set to zero
     while (monthCount < 12){
 
         let date = new Date();
@@ -30,23 +34,46 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
         monthCount += 1;
     }
     
+    // populating:
+    // 1. currentYearDataDict with the real total expenses value for each month
+    // 2. currentYearEachExpense with each day's expense data
+    let currentYearEachExpenseCount = 0;
+
     for (var data of expensesData){
 
         let currentDataDate = data.date;
 
         let currentDataYear = currentDataDate.getFullYear().toString();
-        let currentDataMonth = currentDataDate.toLocaleString('en-US', {month: 'short'});
+        let currentDataMonthShort = currentDataDate.toLocaleString('en-US', {month: 'short'});
+        let currentDataMonthLong = currentDataDate.toLocaleString('en-US', {month: 'long'});
+        let currentDataDay = currentDataDate.getDate().toString();
 
         if (currentDataYear === currentFilterYear){
 
-            currentYearDataDict[currentDataMonth]['total'] += data.amount;
-            currentYearDataDict[currentDataMonth]['data'] = data;
+            // 1. 
+            currentYearDataDict[currentDataMonthShort]['total'] += data.amount;
+            currentYearDataDict[currentDataMonthShort]['data'] = data;
 
             // updating the maximum monthly expense value
-            let currentMonthTotalSoFar = currentYearDataDict[currentDataMonth]['total'];
+            let currentMonthTotalSoFar = currentYearDataDict[currentDataMonthShort]['total'];
             maximumMonthlyExpense = Math.max(maximumMonthlyExpense, currentMonthTotalSoFar);
+
+            // 2.
+            currentYearEachExpense[currentYearEachExpenseCount] = {};
+            currentYearEachExpense[currentYearEachExpenseCount]['year'] = currentDataYear;
+            currentYearEachExpense[currentYearEachExpenseCount]['month'] = currentDataMonthLong;
+            currentYearEachExpense[currentYearEachExpenseCount]['day'] = currentDataDay;
+            currentYearEachExpense[currentYearEachExpenseCount]['amount'] = data.amount;
+            currentYearEachExpense[currentYearEachExpenseCount]['title'] = data.title;
+
+            console.log(`currentYearEachExpense[${currentYearEachExpenseCount}] = ${currentYearEachExpense[currentYearEachExpenseCount]}`);
+
+            currentYearEachExpenseCount += 1;
+
         }
     }
+
+    
 
     let monthlyIndividualChart = [];
     // mapping individual charts for each month of the relevant year
@@ -61,8 +88,8 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
         monthlyIndividualChart.push(<IndividualBarChart monthAbbreviation={month} barHeightPercentage={currentMonthBarChartHeightPercentage}/>);
 
-        console.log(`${month}: ${currentYearDataDict[month]['total']}`);
-        console.log(`barChartHeight: ${currentMonthBarChartHeightPercentage}`);
+        // console.log(`${month}: ${currentYearDataDict[month]['total']}`);
+        // console.log(`barChartHeight: ${currentMonthBarChartHeightPercentage}`);
     }
 
     return (
@@ -76,7 +103,8 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
             </div>
 
             {/* Including list of expenses in the main chart component. ExpensesMainContainer would be a better fit!  */}
-            <ListOfExpenses/>
+            <ListOfExpenses currentFilterYearExpensesDataDeconstructed={currentYearEachExpense}/>
+            
 
 
         </div>

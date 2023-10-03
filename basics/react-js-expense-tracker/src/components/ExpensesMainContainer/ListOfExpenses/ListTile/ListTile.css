@@ -2,6 +2,7 @@
     width: 768px;
     height: 104px;
     padding: 8px;
+    margin: 16px 0;
     border-radius: 12px;
     background-color: #4b4b4b;
     display: flex;
@@ -21,22 +22,40 @@
     align-items: center;
 }
 
-/* .list-tile-description-and-amount {
+.list-tile-description-and-amount {
+    width: 664px;
+    height: 47px;
+    /* background-color: white; */
     display: flex;
     /* flex-direction: row; */
-    /* justify-content: space-between;
-} */
+    justify-content: space-between;
+    align-items: center;
+}
 
 .list-tile-description {
     width: 500.54px;
     height: 29px;
-    background-color: blue;
+    margin: 0 16px;
+    font-size: 20px;
+    color: white;
+    /* display: flex;
+    align-items: center; */
+    
 }
 
 .list-tile-amount {
-    width: 115.46px;
+    /* width: 115.46px; */
     height: 47px;
-    background-color: green;
+    border-radius: 12px;
+    padding: 8px 24px;
+    font-size: 20px;
+    background-color: #40005d;
+    color: white;
+    border: 1px solid white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import "./ListTile.css";
 
-const ListTile = ({data}) => {
+const ListTile = ({monthLong, yearNumberAsString, dayNumberAsString, expenseTitle, expenseAmount}) => {
 
     return (
 
@@ -11,25 +11,24 @@ const ListTile = ({data}) => {
             {/* Expense Date */}
             <div className="list-tile-expense-date">
 
-                <div className="list-tile-expense-date___month">August</div>
+                <div className="list-tile-expense-date___month">{monthLong}</div>
 
-                <div className="list-tile-expense-date___year">2020</div>
+                <div className="list-tile-expense-date___year">{yearNumberAsString}</div>
 
-                <div className="list-tile-expense-date___day">14</div>
+                <div className="list-tile-expense-date___day">{dayNumberAsString}</div>
                 
             </div>
 
-            {/* Expense Title */}
+            {/* Container that holds Expense Title & Amount Spent */}
+            <div className="list-tile-description-and-amount">
 
-                <div className='list-tile-description'>
+                {/* Expense Title */}
+                <h2 className='list-tile-description'>{expenseTitle}</h2>
 
+                {/* Amount spent */}
+                <div className='list-tile-amount'>{"$" + expenseAmount}</div>
 
-                </div>
-
-                <div className='list-tile-amount'>
-
-
-                </div>
+            </div>
 
         </div>
 
