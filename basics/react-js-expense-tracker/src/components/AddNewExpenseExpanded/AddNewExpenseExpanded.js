@@ -2,7 +2,7 @@ import React from "react";
 
 import "./AddNewExpenseExpanded.css";
 
-var AddNewExpenseExpanded = () => {
+var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
 
     return (
         
@@ -26,7 +26,7 @@ var AddNewExpenseExpanded = () => {
                     <div className="add-new-expense-input-container">
 
                         <label className="add-new-expense-input___label">Amount</label>
-                        <input className="add-new-expense-input___element"></input>
+                        <input className="add-new-expense-input___element" type="number" min="0.00" step="0.01"></input>
 
                     </div>
 
@@ -34,10 +34,25 @@ var AddNewExpenseExpanded = () => {
                     <div className="add-new-expense-input-container">
 
                         <label className="add-new-expense-input___label">Date</label>
-                        <input className="add-new-expense-input___element"></input>
+                        <input 
+                            className="add-new-expense-input___element" 
+                            type="date" 
+                            min="2021-01-01" 
+                            max="2999-12-12" 
+                            style={{"font-family": "Noto Sans JP", "font-size": "16px"}}>
+
+                        </input>
 
                     </div>
 
+
+                </div>
+
+                {/* Action Buttons */}
+                <div className="add-new-expense-buttons-container">
+
+                    <button className="cancel-button" onClick={() => updateIsTopMostComponentExpandedFunction()}>Cancel</button>
+                    <button className="add-expense-button" onClick={() => updateIsTopMostComponentExpandedFunction()}>Add Expense</button>
 
                 </div>
 

@@ -2,7 +2,9 @@ import React from "react";
 
 import "./AddNewExpense.css"
 
-function AddNewExpense(){
+function AddNewExpense({updateIsTopMostComponentExpandedFunction}){
+
+
 
     return (
 
@@ -10,7 +12,7 @@ function AddNewExpense(){
 
             <div className="add-new-expense___border">
             
-                <div className="add-new-expense___btn"> 
+                <div className="add-new-expense___btn" onClick={() => updateIsTopMostComponentExpandedFunction()}> 
                     Add New Expense
                 </div>
 
@@ -18,7 +20,8 @@ function AddNewExpense(){
 
         </div>
 
-    )
+    );
+    
 }
 
 export default AddNewExpense;
