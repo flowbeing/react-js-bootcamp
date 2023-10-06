@@ -4,6 +4,10 @@ import "./AddNewExpenseExpanded.css";
 
 var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
 
+    let title = '';
+    let amount = 0;
+    let date = new Date();
+
     return (
         
         <div className="add-new-expense-expanded-center">
@@ -18,7 +22,10 @@ var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
                     <div className="add-new-expense-input-container">
 
                         <label className="add-new-expense-input___label">Title</label>
-                        <input className="add-new-expense-input___element"></input>
+                        <input 
+                            className="add-new-expense-input___element" 
+                            onChange={(event) => title = event.target.value}
+                        ></input>
 
                     </div>
 
@@ -26,7 +33,13 @@ var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
                     <div className="add-new-expense-input-container">
 
                         <label className="add-new-expense-input___label">Amount</label>
-                        <input className="add-new-expense-input___element" type="number" min="0.00" step="0.01"></input>
+                        <input 
+                            className="add-new-expense-input___element" 
+                            type="number" 
+                            min="0.00" 
+                            step="0.01" 
+                            onChange={(event) => amount = event.target.value}
+                        ></input>
 
                     </div>
 
@@ -39,7 +52,8 @@ var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
                             type="date" 
                             min="2021-01-01" 
                             max="2999-12-12" 
-                            style={{"font-family": "Noto Sans JP", "font-size": "16px"}}>
+                            style={{"font-family": "Noto Sans JP", "font-size": "16px"}}
+                            onChange={(event) => date = event.target.value}>
 
                         </input>
 
@@ -51,8 +65,18 @@ var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
                 {/* Action Buttons */}
                 <div className="add-new-expense-buttons-container">
 
-                    <button className="cancel-button" onClick={() => updateIsTopMostComponentExpandedFunction()}>Cancel</button>
-                    <button className="add-expense-button" onClick={() => updateIsTopMostComponentExpandedFunction()}>Add Expense</button>
+                    <button className="cancel-button" onClick={() => updateIsTopMostComponentExpandedFunction(
+                        false, // isAddExpenseButtonClicked
+                        {} // newExpenseDetails
+                    )}>Cancel</button>
+                    <button className="add-expense-button" onClick={() => updateIsTopMostComponentExpandedFunction(
+                        true, // isAddExpenseButtonClicked
+                        {
+                            'title': title,
+                            'amount': amount,
+                            'date': date
+                        } // newExpenseDetails
+                    )}>Add Expense</button>
 
                 </div>
 
