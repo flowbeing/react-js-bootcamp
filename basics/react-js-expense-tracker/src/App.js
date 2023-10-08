@@ -12,40 +12,47 @@ import ExpensesMainContainer from "./components/ExpensesMainContainer/ExpensesMa
 function App() {
 
   // bool to track whether or not the add expense component has been expanded
-  const [isTopMostComponentExpanded, setIsTopMostComponentExpanded] = useState(false);
+  let [isTopMostComponentExpanded, setIsTopMostComponentExpanded] = useState(false);
   
   // variable that holds new expense details. Type - Object
-  var newExpenseDetailsData = {};
+  let [newExpenseDetailsData, setNewExpenseDetailsData] = useState({});
 
   // function to set whether topmost component's expanded or not
   var updateIsTopMostComponentExpanded = (isAddExpenseButtonClicked, newExpenseDetails) => {
 
-    // STOPPED HERE!!
+    
     // If the topmost component is an expanded add new expenses component, isTopMostComponentExpanded would be true.
     // If it's true, it denotes that either a new expense has been added by clicking the 'Add Expense' button or cancelled by clicking the 'Cancel' button
     // If the topmost "add new expense" component's expanded and 'Add Expense' button was clicked (i.e a new expense was added), save the 'new expense' details
     // to newExpenseDetails, otherwise set the value of newExpenseDtails as {} (an empty object)
 
-    
     if (isTopMostComponentExpanded === true && isAddExpenseButtonClicked === true){
 
+      // console.log(`?type date: ${typeof(newExpenseDetails['date']) === 'string'}`);
 
-      if (newExpenseDetails['title'] !== ''){
+
+      if (newExpenseDetails['title'] !== '' && newExpenseDetails['amount'] !== 0 && typeof(newExpenseDetails['date']) === 'string'){
 
         console.log('');
         console.log(`isAddExpenseButtonClicked: ${isAddExpenseButtonClicked}`);
         console.log(`newExpenseDetails: ${newExpenseDetails}`);
         console.log(`newExpenseDetails: ${Object.keys(newExpenseDetails)}, ${Object.values(newExpenseDetails)}`);
+        console.log(`Date String Parse: ${new Date(newExpenseDetails['date'])}`);
         console.log("");
 
-        newExpenseDetailsData = newExpenseDetails;
+
+        setNewExpenseDetailsData(newExpenseDetails);
+        // setNewExpenseDetailsData({});
+
 
       }
+
     }
 
     else{
 
       newExpenseDetailsData = {};
+      setNewExpenseDetailsData({});
 
     }
 
@@ -57,6 +64,9 @@ function App() {
 
 
   }
+
+  console.log('');
+  console.log('build');
 
   return (
     <div >
