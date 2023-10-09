@@ -15,7 +15,7 @@ function App() {
   let [isTopMostComponentExpanded, setIsTopMostComponentExpanded] = useState(false);
   
   // variable that holds new expense details. Type - Object
-  let [newExpenseDetailsData, setNewExpenseDetailsData] = useState({});
+  let [newExpenseDetailsData, setNewExpenseDetailsData] = useState({'date': new Date("2022, 01, 01")});
 
   // function to set whether topmost component's expanded or not
   var updateIsTopMostComponentExpanded = (isAddExpenseButtonClicked, newExpenseDetails) => {
@@ -44,15 +44,13 @@ function App() {
         setNewExpenseDetailsData(newExpenseDetails);
         // setNewExpenseDetailsData({});
 
-
       }
 
     }
 
     else{
 
-      newExpenseDetailsData = {};
-      setNewExpenseDetailsData({});
+      setNewExpenseDetailsData({'date': new Date("2022, 01, 01")});
 
     }
 

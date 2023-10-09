@@ -13,6 +13,7 @@ const ListOfExpenses = ({currentFilterYearExpensesDataDeconstructed}) => {
     var currentFilterYearExpensesDataDeconstructedLength = Object.keys(currentFilterYearExpensesDataDeconstructed).length;
     console.log(`currentFilterYearExpensesDataDeconstructedLength: ${currentFilterYearExpensesDataDeconstructedLength}`);
 
+    // deternines whether "Found No Expenses" should be displayed or an expense's list tile.
     var componentToDisplay;
 
     // mapping current selected filter year's expense data into a list tile
@@ -23,13 +24,14 @@ const ListOfExpenses = ({currentFilterYearExpensesDataDeconstructed}) => {
 
             var expenseDetails = currentFilterYearExpensesDataDeconstructed[expenseNum];
 
+            let expenseId = expenseDetails['id'];
             let expenseYear = expenseDetails['year'];
             let expenseMonth = expenseDetails['month'];
             let expenseDay = expenseDetails['day'];
             let expenseTitle = expenseDetails['title'];
             let expenseAmount = expenseDetails['amount'];
             
-            return <ListTile monthLong={expenseMonth} yearNumberAsString={expenseYear} dayNumberAsString={expenseDay} expenseTitle={expenseTitle} expenseAmount={expenseAmount}/>;
+            return <ListTile key={expenseId} monthLong={expenseMonth} yearNumberAsString={expenseYear} dayNumberAsString={expenseDay} expenseTitle={expenseTitle} expenseAmount={expenseAmount}/>;
         });
     }
     else{
