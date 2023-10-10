@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 
 import "./ExpensesMainContainer.css";
 import FilterByYear from "./FilterByYear/FilterByYear";
@@ -36,10 +36,13 @@ const DUMMY_EXPENSES = [
 let buildCountExpensesMainContainer = 0;
 
 
-var ExpensesMainContainer = ({newExpenseDetailsObject}) => {
+const ExpensesMainContainer = (props) => {
 
     // current expense year. i.e year to use as current filter year and within list of expenses & main chart component..
     // let currentExpenseYear = '2022';
+
+    let newExpenseDetailsObject = props.newExpenseDetailsObject;
+    let updateFilterYearValueFunction = props.updateFilterYearValueFunction;
     
 
     // STOPPED HERE!
@@ -47,7 +50,10 @@ var ExpensesMainContainer = ({newExpenseDetailsObject}) => {
     // repeatedly. Seems like newExpenseDetailsObject retains its value within the App.js file and keeps getting implemented
     // as it exactly was repeatedly..
     let lengthOfNewExpenseDetailsObject = Object.keys(newExpenseDetailsObject).length;
-    console.log(`length of new expense details object: ${lengthOfNewExpenseDetailsObject}`);
+    console.log('');
+    console.log('--------------------------------');
+    console.log('NEW BUILD EXPENSESMAINCONTAINER');
+    console.log(`length of new expense details object: ${Object.keys(newExpenseDetailsObject).length}`);
 
     // length of new expense data. helps determine whether or not a user has entered new expense data..
     // if there's new expense data, push it to "DUMMY_EXPENSES" object
@@ -67,15 +73,16 @@ var ExpensesMainContainer = ({newExpenseDetailsObject}) => {
                 'date': new Date(newExpenseDetailsObject['date'])
             }
         );
-
-        // resetting the length of newExpenseDetailsObject to 1
-        newExpenseDetailsObject = {'date': new Date(newExpenseDetailsObject['date'])};
-        lengthOfNewExpenseDetailsObject = Object.keys(newExpenseDetailsObject).length;
-
-        console.log(`new length of new expense details object: ${lengthOfNewExpenseDetailsObject}`);
         
 
+        // resetting the length of newExpenseDetailsObject to 1
+        // newExpenseDetailsObject = {'date': new Date(newExpenseDetailsObject['date'])};
+        // lengthOfNewExpenseDetailsObject = Object.keys(newExpenseDetailsObject).length;
+
+        // console.log(`new length of new expense details object: ${lengthOfNewExpenseDetailsObject}`);
+        
         console.log(`pushed new expense data to dummy data`);
+        
     }
 
     // obtaining the relevant filter year
@@ -83,25 +90,14 @@ var ExpensesMainContainer = ({newExpenseDetailsObject}) => {
 
     console.log('');
     console.log(`relevant filter year: ${relevantFilterYear}`);
-
     console.log(`dummy data length: ${DUMMY_EXPENSES.length}`);
 
     // currentFilterYearValue initial year set to 2022
-    let [currentFilterYearValue, setCurrentFilterYearValue] = useState("2022");
+    // let [currentFilterYearValue, setCurrentFilterYearValue] = useState("2022");
 
-    // if (currentFilterYearValue !== relevantFilterYear){
-    //     setCurrentFilterYearValue(relevantFilterYear);
-    // }
-
-    console.log(`current filter year: ${currentFilterYearValue}`);
+    // console.log(`current filter year: ${currentFilterYearValue}`);
 
     // this function helps change the current expenses filter year to a user's selection
-    const currentFilterYearValueFunction = (currentFilterYear) => {
-
-        setCurrentFilterYearValue(currentFilterYear);
-
-        // console.log(`currentFilterYearValue: ${currentFilterYearValue}`);
-    };
 
     console.log(`buildCountExpensesMainContainer: ${buildCountExpensesMainContainer}`);
     buildCountExpensesMainContainer += 1;
@@ -111,8 +107,8 @@ var ExpensesMainContainer = ({newExpenseDetailsObject}) => {
 
             <div className="expenses-main-container___border">
 
-                <FilterByYear getFilterYear={currentFilterYearValueFunction}/>
-                <MainChartComponent expensesData={DUMMY_EXPENSES} currentFilterYear={currentFilterYearValue}/>
+                <FilterByYear currentFilterYear={relevantFilterYear} updateFilterYear={updateFilterYearValueFunction}/>
+                <MainChartComponent expensesData={DUMMY_EXPENSES} currentFilterYear={relevantFilterYear}/>
 
             </div>
 

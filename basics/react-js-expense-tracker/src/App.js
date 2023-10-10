@@ -5,11 +5,13 @@ import AddNewExpenseExpanded from "./components/AddNewExpenseExpanded/AddNewExpe
 import ExpensesMainContainer from "./components/ExpensesMainContainer/ExpensesMainContainer";
 
 
-// CURRENT ISSUES
-// 1. updateIsTopMostComponentExpanded is run / displays twice to be run twice
-// 2. 
+let buildCountAppjs = 0;
 
 function App() {
+
+  console.log('');
+  console.log('--------------------------------');
+  console.log('NEW BUILD APPJS');
 
   // bool to track whether or not the add expense component has been expanded
   let [isTopMostComponentExpanded, setIsTopMostComponentExpanded] = useState(false);
@@ -31,6 +33,7 @@ function App() {
       // console.log(`?type date: ${typeof(newExpenseDetails['date']) === 'string'}`);
 
 
+      // if a new expense's introduced via the expanded add expense componenet, add it as newExpenseDetailsData
       if (newExpenseDetails['title'] !== '' && newExpenseDetails['amount'] !== 0 && typeof(newExpenseDetails['date']) === 'string'){
 
         console.log('');
@@ -48,11 +51,13 @@ function App() {
 
     }
 
+    // if 
     else{
 
       setNewExpenseDetailsData({'date': new Date("2022, 01, 01")});
 
     }
+
 
     // reverse the value of isTopMostComponentExpanded to ensure that the right top most add expense widget is displayed
     // if isTopMostComponentExpanded is reversed to false, a collapsed version of the add expense widget will be displayed and vise versa
@@ -63,8 +68,21 @@ function App() {
 
   }
 
+  // function that helps update the current expense year to the user's selection "Filter by Year" dropdown selection..
+  const updateFilterYearValueFunction = (currentFilterYear) => {
+
+    let newExpenseFilterYearAndDate = new Date(`${currentFilterYear}, 01, 01`);
+
+    setNewExpenseDetailsData({'date': newExpenseFilterYearAndDate});
+
+    // console.log(`currentFilterYearValue: ${currentFilterYearValue}`);
+};
+
   console.log('');
   console.log('build');
+
+  console.log(`buildCountAppjs: ${buildCountAppjs}`);
+  buildCountAppjs += 1;
 
   return (
     <div >
@@ -72,9 +90,11 @@ function App() {
         <AddNewExpense updateIsTopMostComponentExpandedFunction={updateIsTopMostComponentExpanded}/>: 
         <AddNewExpenseExpanded updateIsTopMostComponentExpandedFunction={updateIsTopMostComponentExpanded}/>
       }
-      <ExpensesMainContainer newExpenseDetailsObject={newExpenseDetailsData}/>
+      <ExpensesMainContainer newExpenseDetailsObject={newExpenseDetailsData} updateFilterYearValueFunction={updateFilterYearValueFunction}/>
     </div>
   );
+
+  
 
 }
 

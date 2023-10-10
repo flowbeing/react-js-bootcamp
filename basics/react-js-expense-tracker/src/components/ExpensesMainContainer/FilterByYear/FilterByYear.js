@@ -2,7 +2,7 @@ import React from "react"
 import "./FilterByYear.css"
 
 
-var FilterByYear = ({getFilterYear}) => {
+var FilterByYear = ({updateFilterYear, currentFilterYear}) => {
 
     return (
 
@@ -10,7 +10,7 @@ var FilterByYear = ({getFilterYear}) => {
             
             <label className="expenses-main-container___filter-label">Filter by year</label>
 
-            <select className="expenses-main-container___filter-dropdown" onChange={(event) => getFilterYear(event.target.value)}> 
+            <select value={currentFilterYear} className="expenses-main-container___filter-dropdown" onChange={(event) => updateFilterYear(event.target.value)}> 
                 <option>2022</option>
                 <option>2021</option>
                 <option>2020</option>
