@@ -53,7 +53,7 @@ var AddNewExpenseExpanded = ({updateIsTopMostComponentExpandedFunction}) => {
                             min="2019-01-01" 
                             max="2022-12-31" 
                             style={{"fontFamily": "Noto Sans JP", "font-size": "16px"}}
-                            onChange={(event) => date = event.target.value}>
+                            onChange={(event) => date = new Date(event.target.value)}>
 
                         </input>
 

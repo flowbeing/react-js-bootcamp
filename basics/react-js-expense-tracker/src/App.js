@@ -22,6 +22,19 @@ function App() {
   // function to set whether topmost component's expanded or not
   var updateIsTopMostComponentExpanded = (isAddExpenseButtonClicked, newExpenseDetails) => {
 
+    // current newExpenseDetailsData 'date' (year);
+    // let currentExpenseFilterYear = newExpenseDetailsData['date'].getFullYear().toString();
+    // console.log(`newExpenseDetailsData full year: ${currentExpenseFilterYear}, type: ${typeof(currentExpenseFilterYear)}`);
+
+    // new expense details 'date' (year)
+    // let newExpenseFilterYear;
+
+    if (newExpenseDetails !== undefined && newExpenseDetails['date'] !== undefined){
+      // newExpenseFilterYear = newExpenseDetails['date'].getFullYear().toString();
+      // console.log(`newExpenseFilterYear: ${newExpenseFilterYear}, type: ${typeof(newExpenseFilterYear)}`);
+      // console.log(`typeof newExpenseDetails['date']: ${typeof(newExpenseDetails['date'])}`);
+    }
+
     
     // If the topmost component is an expanded add new expenses component, isTopMostComponentExpanded would be true.
     // If it's true, it denotes that either a new expense has been added by clicking the 'Add Expense' button or cancelled by clicking the 'Cancel' button
@@ -33,8 +46,8 @@ function App() {
       // console.log(`?type date: ${typeof(newExpenseDetails['date']) === 'string'}`);
 
 
-      // if a new expense's introduced via the expanded add expense componenet, add it as newExpenseDetailsData
-      if (newExpenseDetails['title'] !== '' && newExpenseDetails['amount'] !== 0 && typeof(newExpenseDetails['date']) === 'string'){
+      // if a new expense's introduced via the expanded add expense component, add it as newExpenseDetailsData
+      if (newExpenseDetails['title'] !== '' && newExpenseDetails['amount'] !== 0 && typeof(newExpenseDetails['date']) === 'object'){
 
         console.log('');
         console.log(`isAddExpenseButtonClicked: ${isAddExpenseButtonClicked}`);
@@ -51,10 +64,18 @@ function App() {
 
     }
 
-    // if 
-    else{
+    // if isTopMostComponentExpanded was previously false i.e the topmost (Add expense) component was previously collapsed and just got clicked,
+    // do not change the Filter Year in MainChartComponent
+    else if (isTopMostComponentExpanded === false){
+      
+      setNewExpenseDetailsData({'date': newExpenseDetailsData['date']});
 
-      setNewExpenseDetailsData({'date': new Date("2022, 01, 01")});
+    }
+    // if the topmost component's expanded, and cancel button is clicked (newExpenseDetails will be empty in that case), 
+    // do not change the Filter Year in MainChartComponent
+    else if (isTopMostComponentExpanded === true && Object.keys(newExpenseDetails).length === 0){
+
+      setNewExpenseDetailsData({'date': newExpenseDetailsData['date']});
 
     }
 
