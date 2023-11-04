@@ -35,7 +35,10 @@ const DUMMY_EXPENSES = [
 
 let buildCountExpensesMainContainer = 0;
 
-
+// This component contains the following components:
+// a. FilterByYear component
+// b. Expenses Chart Component
+// c. List of Expenses Component
 const ExpensesMainContainer = (props) => {
 
     // current expense year. i.e year to use as current filter year and within list of expenses & main chart component..
@@ -107,7 +110,9 @@ const ExpensesMainContainer = (props) => {
 
             <div className="expenses-main-container___border">
 
+                {/* Filter by year component */}
                 <FilterByYear currentFilterYear={relevantFilterYear} updateFilterYear={updateFilterYearValueFunction}/>
+                {/* Expenses Chart & List of Expenses components */}
                 <MainChartComponent expensesData={DUMMY_EXPENSES} currentFilterYear={relevantFilterYear}/>
 
             </div>

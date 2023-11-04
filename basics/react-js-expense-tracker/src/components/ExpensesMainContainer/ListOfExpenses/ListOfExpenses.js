@@ -13,7 +13,7 @@ const ListOfExpenses = ({currentFilterYearExpensesDataDeconstructed}) => {
     var currentFilterYearExpensesDataDeconstructedLength = Object.keys(currentFilterYearExpensesDataDeconstructed).length;
     console.log(`currentFilterYearExpensesDataDeconstructedLength: ${currentFilterYearExpensesDataDeconstructedLength}`);
 
-    // deternines whether "Found No Expenses" should be displayed or an expense's list tile.
+    // determines whether "Found No Expenses" should be displayed or an expense's list tile.
     var componentToDisplay;
 
     // mapping current selected filter year's expense data into a list tile

@@ -41,6 +41,7 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
     for (var data of expensesData){
 
+        let currentDataId = data.id;
         let currentDataDate = data.date;
 
         let currentDataYear = currentDataDate.getFullYear().toString();
@@ -60,6 +61,7 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
             // 2.
             currentYearEachExpense[currentYearEachExpenseCount] = {};
+            currentYearEachExpense[currentYearEachExpenseCount]['id'] = currentDataId;
             currentYearEachExpense[currentYearEachExpenseCount]['year'] = currentDataYear;
             currentYearEachExpense[currentYearEachExpenseCount]['month'] = currentDataMonthLong;
             currentYearEachExpense[currentYearEachExpenseCount]['day'] = currentDataDay;
@@ -98,7 +100,7 @@ const MainChartComponent = ({expensesData, currentFilterYear}) => {
 
             <div className="main-chart___border">
 
-            {monthlyIndividualChart}
+                {monthlyIndividualChart}
             
             </div>
 
