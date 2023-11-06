@@ -21,7 +21,7 @@ export default function Player({playerName, symbol}){
 
     if (isEditing){
         buttonContent = 'Save';
-        playerNameElement = <input className='player input' type="text" defaultValue={playerName} value={inputContent} onChange={handlePlayerNameChange}></input>;
+        playerNameElement = <input className='player input' type="text" value={inputContent} onChange={handlePlayerNameChange}></input>;
     }
     else if (!isEditing){
         buttonContent = 'Edit';
