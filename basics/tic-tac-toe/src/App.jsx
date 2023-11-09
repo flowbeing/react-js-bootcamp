@@ -5,17 +5,56 @@ import "./index.css";
 import Player from "./components/Player.jsx";
 import Gameboard from "./components/Gameboard.jsx";
 
+
 function App() {
 
-  const [currentPlayerSymbol, setCurrentPlayerSymbol] = useState('X');
+  // Symbol of current player
+  const [currentPlayerSymbol, setCurrentPlayerSymbol] = useState("X");
 
-  function handleCurrentPlayerSymbol(){
+  // game moves (object)
+  const [turns, setTurns] = useState([]);
 
-    setCurrentPlayerSymbol((previousPlayerSymbol) => {
+    // callback function to change the player symbol
+    function handleCurrentPlayerSymbol(lastPlayerSymbol){
 
-      return previousPlayerSymbol == "X" ? "O" : "X";
+        // updating current player symbol
+        let nextPlayerSymbol = lastPlayerSymbol == "X" ? "O" : "X";
+        setCurrentPlayerSymbol(nextPlayerSymbol);
+
+    }
+
+  // callback functions to register each player moves
+  function handleTurns(rowNum, colNum) {
+
+    // update turns object with the latest player moves
+    setTurns(previousTurns => {
+
+      let lengthOfPreviousTurns = previousTurns.length;
+      let previousTurnNum = 0; // first position
+      let previousPlayerSymbol;
+
+      // if at least one move has been make, compute update the immediatePlayerSymbol to not just be "X"
+      if (lengthOfPreviousTurns > 0){
+        previousPlayerSymbol = previousTurns[previousTurnNum]["playerSymbol"];
+
+        console.log(`previousPlayerSymbol: ${previousPlayerSymbol}`);
+        console.log('');
+      }
+      
+      // updating game turns immutably.
+      // immediatePlayerSymbol refers to the player that just made a move
+      let updatedTurns = [
+        {'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': currentPlayerSymbol},
+        ...previousTurns
+      ]
+
+      // register the next player
+      handleCurrentPlayerSymbol(currentPlayerSymbol);
+
+      return updatedTurns;
 
     });
+
   }
   
   // TO DO:
@@ -27,14 +66,14 @@ function App() {
       <div id="game-container">
 
         {/* Player Information Area */}
-        <ol id="players">
+        <ol id="players" className="highlight-player">
           {/*  List of Players displayed as flex box*/}
-          <Player playerName="player name" symbol="X"/>
-          <Player playerName="player name" symbol="O"/>
+          <Player playerName="player name" playerSymbol="X" activePlayer={currentPlayerSymbol}/>
+          <Player playerName="player name" playerSymbol="O" activePlayer={currentPlayerSymbol}/>
         </ol>
 
         <ol id="game-board">
-          <Gameboard playerSymbol={currentPlayerSymbol}/>
+          <Gameboard gameTurns={turns} handleGameTurns={handleTurns}/>
         </ol>
         
       </div>

@@ -2,30 +2,21 @@ import {useState} from 'react';
 
 import "../index.css";
 
-var initialGameData = [
+var gameData = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
 ];
 
-export default function Gameboard({playerName}){
+export default function Gameboard({gameTurns, handleGameTurns}){
+    
+    // generating game data from gameTurns variable
+    for (var turn of gameTurns){
+        let turnRowNum = turn['rowNum'];
+        let turnColNum = turn['colNum'];
+        let turnPlayerSymbol = turn['playerSymbol'];
 
-    const [currentGameData, setCurrentGameData] = useState(initialGameData);
-
-    function handleButtonClick(buttonRowNum, buttonColumnNum, playerName){
-
-        setCurrentGameData((previousGameData) => {
-
-            // creating a copy of previousGameData to ensure that it's updated immutably per ReactJS convention
-            const updatedGameBoard = [...previousGameData].map((rowData) => [...rowData]); 
-            console.log(`updatedGameBoard: ${updatedGameBoard}`);
-
-            // updating previousGameData immutably
-            updatedGameBoard[buttonRowNum][buttonColumnNum] = "X";
-
-            return updatedGameBoard;
-
-        });
+        gameData[turnRowNum][turnColNum] = turnPlayerSymbol;
 
     }
 
@@ -33,13 +24,13 @@ export default function Gameboard({playerName}){
         <>
             {
                 // Each row
-                currentGameData.map((rowData, rowIndex) => {
+                gameData.map((rowData, rowIndex) => {
                     return <li key={rowIndex}>
                         <ol>
                             {
                                 rowData.map((buttonSymbol, columnIndex) => {
                                     return <li key={columnIndex}>
-                                        <button id="game-board button" onClick={() => handleButtonClick(rowIndex, columnIndex, playerName)}>
+                                        <button id="game-board button" onClick={() => handleGameTurns(rowIndex, columnIndex)}>
                                             {buttonSymbol}
                                         </button>
                                     </li>

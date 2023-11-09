@@ -1,6 +1,8 @@
 import {useState} from 'react';
 
-export default function Player({playerName, symbol}){
+export default function Player({playerName, playerSymbol, activePlayer}){
+
+    console.log(`playerSymbol: ${playerSymbol}, activePlayer: ${activePlayer}`)
 
     const [isEditing, setIsEditing] = useState(false);
     const [inputContent, updateInputContent] = useState(playerName);
@@ -29,11 +31,11 @@ export default function Player({playerName, symbol}){
 
 
     return (
-        <li>
+        <li className={`${activePlayer == playerSymbol && "active"}`}>
             <span className="player">
 
                 {playerNameElement}
-                <span className="player-symbol">{symbol}</span>
+                <span className="player-symbol">{playerSymbol}</span>
 
             </span>
             <button onClick={handleButtonClick}>{buttonContent}</button>
