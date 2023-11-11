@@ -1,10 +1,10 @@
-export default function Log(){
+export default function Log({logsList}){
 
     console.log("In log component");
 
     return (
         <>
-            <li><span>In Log component</span></li>        
+            {logsList}       
         </>
     )
 }

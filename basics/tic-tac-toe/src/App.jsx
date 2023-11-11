@@ -6,6 +6,8 @@ import Player from "./components/Player.jsx";
 import Gameboard from "./components/Gameboard.jsx";
 import Log from "./components/Log";
 
+// list of player moves
+let logsList = [];
 
 function App() {
 
@@ -44,17 +46,45 @@ function App() {
       
       // updating game turns immutably.
       // immediatePlayerSymbol refers to the player that just made a move
-      let updatedTurns = [
-        {'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': currentPlayerSymbol},
-        ...previousTurns
-      ];
+      let mostRecentMovePosition = `${colNum},${rowNum}`; // inverted to avoid key duplication in Gameboard component
+      let listOfAllOccupiedPositions = logsList.map(move => move.key); // list of all occupied positions
+      let isMostRecentPositionAlreadyOccupied = listOfAllOccupiedPositions.includes(mostRecentMovePosition);
+      console.log(`listOfAllOccupiedPositions: ${listOfAllOccupiedPositions}`);
+      console.log(`mostRecentMovePosition: ${mostRecentMovePosition}`);
+      console.log(`isMostRecentPositionAlreadyOccupied: ${isMostRecentPositionAlreadyOccupied}`);
 
-      // register the next player
-      handleCurrentPlayerSymbol(currentPlayerSymbol);
+      let updatedTurns = [...previousTurns];
+      if (!isMostRecentPositionAlreadyOccupied){
+
+        updatedTurns.unshift({'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': currentPlayerSymbol});
+  
+        // register the next player
+        handleCurrentPlayerSymbol(currentPlayerSymbol);
+        
+      }
 
       return updatedTurns;
 
     });
+
+  }
+
+  // function to populate logs data
+  function handleLogs(individualLog){
+
+    // make the latest move highlighted
+    // if (logsList.length > 0){
+    //   logsList[0].class = '';
+    //   individualLog.class = "highlighted";
+    // }
+
+    logsList.unshift(individualLog);
+
+    console.log(`indivdualLogElement className: ${individualLog.className}`);
+    console.log(`indivdualLogElement class: ${individualLog.class}`);
+    console.log(`indivdualLogElement id: ${individualLog.id}`);
+
+
 
   }
   
@@ -74,11 +104,11 @@ function App() {
         </ol>
 
         <ol id="game-board">
-          <Gameboard gameTurns={turns} handleGameTurns={handleTurns}/>
+          <Gameboard gameTurns={turns} handleGameTurns={handleTurns} handleLogs={handleLogs}/>
         </ol>
 
         <ol id="log">
-          <Log></Log>          
+          <Log logsList={logsList}></Log>          
         </ol>
         
       </div>
