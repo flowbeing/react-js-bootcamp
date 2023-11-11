@@ -4,6 +4,7 @@ import "./index.css";
 
 import Player from "./components/Player.jsx";
 import Gameboard from "./components/Gameboard.jsx";
+import Log from "./components/Log";
 
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
       let updatedTurns = [
         {'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': currentPlayerSymbol},
         ...previousTurns
-      ]
+      ];
 
       // register the next player
       handleCurrentPlayerSymbol(currentPlayerSymbol);
@@ -74,6 +75,10 @@ function App() {
 
         <ol id="game-board">
           <Gameboard gameTurns={turns} handleGameTurns={handleTurns}/>
+        </ol>
+
+        <ol id="log">
+          <Log></Log>          
         </ol>
         
       </div>

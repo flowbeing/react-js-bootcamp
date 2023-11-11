@@ -18,6 +18,8 @@ export default function Gameboard({gameTurns, handleGameTurns}){
 
         gameData[turnRowNum][turnColNum] = turnPlayerSymbol;
 
+        console.log('still in gameboard component');
+
     }
 
     return (
