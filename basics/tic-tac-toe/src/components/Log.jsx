@@ -1,4 +1,6 @@
-export default function Log({turns}){
+import toPascalCase from "../functions/to-pascal-case";
+
+export default function Log({turns, playersNames}){
 
     let turnsLog;
 
@@ -13,7 +15,7 @@ export default function Log({turns}){
             let currentTurnPlayerSymbol = turn.playerSymbol
             let currentlistElement = 
                 <li key={`${turnColNum},${turnRowNum}`} className={turnNum === 0 ? "highlighted" : ""}>
-                    {`${currentTurnPlayerSymbol} selected R${turnRowNum + 1}, C${turnColNum + 1}`}
+                    {`${toPascalCase(playersNames[currentTurnPlayerSymbol])} selected R${turnRowNum + 1}, C${turnColNum + 1}`}
                 </li>
 
             return currentlistElement;

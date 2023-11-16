@@ -7,6 +7,7 @@ import AllPossibleWinningCombination from "./data/all-possible-wining-comibinati
 import Player from "./components/Player.jsx";
 import Gameboard from "./components/Gameboard.jsx";
 import Log from "./components/Log";
+import Gameover from "./components/Gameover";
 
 // affected
 "currentPlayerSymbol";
@@ -33,11 +34,7 @@ function handleplayersDetails(
   }
 ){
 
-  let playersDetailsObject = {
-    currentPlayerSymbol: "X",
-    "X": "Player 1",
-    "O": "Player 2",
-  };
+  let currentPlayerSymbol = "X";
 
   // most recent gameboard move that was made by a player
   let mostRecentMove;
@@ -54,61 +51,52 @@ function handleplayersDetails(
     mostRecentMovePlayerSymbol = mostRecentMove.playerSymbol;
 
     // if the symbol of the player that made the most recent game move is "X", set the current player's symbol to "Y" and vice versa
-    playersDetailsObject.currentPlayerSymbol = mostRecentMovePlayerSymbol === "X" ? "O" : "X";
+    currentPlayerSymbol = mostRecentMovePlayerSymbol === "X" ? "O" : "X";
   }
 
-  // if player symbol & playerName are not null, update the relevant player names
-  if (symbol !== null & playerName !== null){
-
-    playersDetailsObject.symbol = playerName;
-
-  }
-
-  return playersDetailsObject;
+  return currentPlayerSymbol;
 
 }
 
 // function to derive a winner
 function deriveWinner(
   gameData, // gameboard data
-  playersDetails, // object that contains the current player symbol, and names of players mapped to their symbols
   turnCount // number of game moves that have been made
   ){
 
   let gameEndObject = {
-    "winnerName": "null",
+    "winnerSymbol": "null",
     "isWinner": false,
     "isDraw": false
   };
 
-  let nullRowCounter = 0;
+  // let nullRowCounter = 0;
   for (var rowNum in AllPossibleWinningCombination){
 
     let winningCombination = AllPossibleWinningCombination[rowNum];
     
+    // location of each three winning squares
     let squareOnePoints = winningCombination[0];
     let squareTwoPoints = winningCombination[1];
     let squareThreePoints = winningCombination[2];
 
-    let squareOne = gameData[squareOnePoints.rowNum][squareOnePoints.colNum];
-    let squareTwo = gameData[squareTwoPoints.rowNum][squareTwoPoints.colNum];
-    let squareThree = gameData[squareThreePoints.rowNum][squareThreePoints.colNum];
+    // each three winning squares's symbol
+    let squareOneSymbol = gameData[squareOnePoints.rowNum][squareOnePoints.colNum];
+    let squareTwoSymbol = gameData[squareTwoPoints.rowNum][squareTwoPoints.colNum];
+    let squareThreeSymbol = gameData[squareThreePoints.rowNum][squareThreePoints.colNum];
 
     // console.log(`${squareOne} ${squareTwo} ${squareThree}`);
 
     // if a winner exists, register the player's name, other wise state that there's been a draw when all 9 moves have been made
-    if (squareOne != null && squareOne == squareTwo && squareOne == squareThree) {
-      console.log(`${squareOne} ${squareTwo} ${squareThree}`);
-      console.log(`winner found: ${squareOne}`);
-      gameEndObject.winnerName = playersDetails[squareOne];
+    if (squareOneSymbol != null && squareOneSymbol == squareTwoSymbol && squareTwoSymbol == squareThreeSymbol) {
+      console.log(`${squareOneSymbol} ${squareTwoSymbol} ${squareThreeSymbol}`);
+      console.log(`winner found: ${squareOneSymbol}`);
+      gameEndObject.winnerSymbol = squareOneSymbol;
       gameEndObject.isWinner = true;
       break
     }
-    else if (squareOne == null && squareTwo == null && squareThree == null){
-      nullRowCounter += 1;
-
-      if (nullRowCounter == 3 && turnCount == 9) gameEndObject.isDraw = true;
-    }
+    else if (!gameEndObject.isWinner && turnCount == 9) gameEndObject.isDraw = true;
+    
   }
 
   return gameEndObject;
@@ -117,7 +105,7 @@ function deriveWinner(
 
 
 
-
+// App 
 function App() {
 
   // gameboard data
@@ -125,60 +113,83 @@ function App() {
 
   // game moves (object)
   let [turns, setTurns] = useState({
-    each: [],
-    // log: []
+    each: []
   });
 
-  // console.log(`turns in: ${turns}, type: ${typeof(turns)}`);
-
-  // Object that contains:
-  // 1. Current player symbol
-  // 2. Names of players with symbol "X" and "Y"
-  let playersDetails = handleplayersDetails({turns: turns.each});
-
-  // check for winner
+  // player symbols and their current names
+  // names of players with symbol "X" and "Y"
+  let [playersNames, updatePlayersName] = useState({
+    "X": "Player 1",
+    "O": "Player 2",
+  });
+  
   console.log("");
+  console.log(`playersNames: ${playersNames.X}`);
+  console.log(`playersNames: ${playersNames.O}`);
+
+  // current player symbol
+  let currentPlayerSymbol = handleplayersDetails({turns: turns.each});
+
+  // -----------------------------------------------------
+  // gameEndObject
+  // check for winner
+  
   let gameEndObject = deriveWinner(
     gameData, 
-    playersDetails,
+    // playersNames,
     turns.each.length
   );
+  console.log(`gameEndObject: ${gameEndObject}`);
   let isWinner = gameEndObject.isWinner;
-  let winnerName = gameEndObject.winnerName;
-  
+  let winnerSymbol = gameEndObject["winnerSymbol"];
+  let winnerName;
+
+  // setting winnerName if any
+  if (winnerSymbol != null){
+    winnerName = playersNames[winnerSymbol]
+    gameEndObject['winnerName'] = winnerName;
+    console.log(`winnerSymbol: ${winnerSymbol}`);
+    console.log(`winnerName: ${winnerName}`);
+    console.log(`winnerName: ${winnerName}`);
+  }
+
   let isDraw = gameEndObject.isDraw;
-  console.log(`derived winner: ${winnerName}`);
+  // -----------------------------------------------------
 
   // reverse current player if a winner exists to avoid displaying the update
   if (isWinner){
     console.log(`winner now exists, updating currentPlayerSymbol as the previous player's symbol`);
-    playersDetails.currentPlayerSymbol = playersDetails.currentPlayerSymbol == "X" ? "O" : "X";
+    currentPlayerSymbol = currentPlayerSymbol == "X" ? "O" : "X";
   }
 
-  // callback functions to register each player moves
+  // function to update player names
+  function handleNewPlayerName(playerSymbol, newPlayerName){
+
+    updatePlayersName(previousPlayersNamesObject => {
+      
+      return {
+        ...previousPlayersNamesObject,
+        [playerSymbol]: newPlayerName
+      }
+    });
+  }
+
+  // function to register each player moves
   function handleTurns(rowNum, colNum) {
-
-    // let updatedGameData = [...gameData.map(eachRow => [...eachRow])];
-    // updatedGameData[rowNum][colNum] = playersDetails.currentPlayerSymbol;
-
-    // updateGameData(prevGameData => updatedGameData);
 
     // update gameboard immutably
     updateGameData(prevGameGata => {
 
       let updatedGameData = [...prevGameGata.map(row => [...row])];
 
-      updatedGameData[rowNum][colNum] = playersDetails.currentPlayerSymbol;
+      updatedGameData[rowNum][colNum] = currentPlayerSymbol;
 
       return updatedGameData;
 
     });
-
-    // gameData.forEach((item, itemIndex) => console.log(`itemIndex: ${itemIndex} item: ${typeof(item)}`));
-    // console.log(`gamedata: ${gameData}`);
-
-    console.log(`isWinner handleTurns: ${isWinner}`);
-    if (!isWinner){
+    
+    // Add new move to turns data if there's no winner or draw yet
+    if (!isWinner && !isDraw){
 
       // update turns object with the latest player moves
       setTurns((previousTurnsObject) => {
@@ -188,45 +199,7 @@ function App() {
         };
 
         // register current player's move and log it move before determining who the next player is
-        updatedTurnsObject.each.unshift({'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': playersDetails.currentPlayerSymbol});
-
-        // logging current player's move
-        // let logsList = updatedTurnsObject.log.map(logElement => {
-        //   let currentLogElementKey = logElement.key;
-        //   let currentLogElementContent = logElement.children;
-
-        //   let unhightledCurrentLogElement = <li key={currentLogElementKey}>{currentLogElementContent}</li>;
-
-        //   return unhightledCurrentLogElement;
-        // });
-
-        // let lastMoveLogElement; // last move log element (li) if any
-        // let lastMoveLogElementKey;
-        // let lastMoveLogElementContent;
-        // let unhighlightedLastMovelogElement;
-
-        // if (logsList.length > 0){
-        //   lastMoveLogElement = logsList[0];
-        //   lastMoveLogElement.setAttribute("class", "");
-        //   // lastMoveLogElementKey = lastMoveLogElement.key;
-        //   // lastMoveLogElementContent = lastMoveLogElement.children;
-        //   // console.log(`lastMoveLogElementKey: ${typeof(lastMoveLogElementKey)}`);
-
-        //   // unhighlightedLastMovelogElement = <li key={lastMoveLogElementKey} className="highlighted">{lastMoveLogElementContent}</li>;
-        //   // console.log(`logsList[0] == logsList[0] copy: ${logsList[0] == unhighlightedLastMovelogElement}`);
-        //   // logsList.shift();
-        //   // logsList.unshift(unhighlightedLastMovelogElement);
-        // }
-
-        // let currentMoveLog = <li key={`${colNum},${rowNum}`} className={(logsList.indexOf(currentMoveLog) !== -1 && logsList.indexOf(currentMoveLog) == 0) && "highlighted"}>{`${playersDetails.currentPlayerSymbol} selected R${rowNum + 1}, C${colNum + 1}`}</li>;
-        // console.log(`index of currentMoveLog in logsList: ${logsList.indexOf(currentMoveLog)}`);
-        // logsList.unshift(currentMoveLog);
-        // console.log(currentMoveLog.props);
-        // console.log(currentMoveLog.key);
-
-        // updatedTurnsObject.log = [...logsList];
-        // console.log(`updatedTurnsObject.log length: ${updatedTurnsObject.log}`);
-        // updatedTurnsObject.log.forEach(item => console.log(`li key: ${item.key}, li class: ${item.props.className}`));
+        updatedTurnsObject.each.unshift({'rowNum': rowNum, 'colNum': colNum, 'playerSymbol': currentPlayerSymbol});
 
         return updatedTurnsObject;
 
@@ -235,40 +208,45 @@ function App() {
 
   }
 
-  // function to populate logs data
-  // function handleLogs(individualLog){
-  // 
-  //   // make the latest move highlighted
-  //   // if (logsList.length > 0){
-  //   //   logsList[0].class = '';
-  //   //   individualLog.class = "highlighted";
-  //   // }
-  // 
-  //   logsList.unshift(individualLog);
-  // 
-  //   console.log(`indivdualLogElement className: ${individualLog.className}`);
-  //   console.log(`indivdualLogElement class: ${individualLog.class}`);
-  //   console.log(`indivdualLogElement id: ${individualLog.id}`);
-  // 
-  // }
+  // function to reset game-board and turns data if when game has ended i.e when there's a winner or draw
+  function handleNewGame(event){
+
+    console.log(`in handleNewGame`);
+
+    // reset game-board data
+    updateGameData(prevGameGata => INITIAL_GAMEDATA);
+
+    // reset turns data
+    setTurns(prevTurns => ({
+      ...prevTurns,
+      ['each']: []
+    }));
+
+    // reset player names
+    updatePlayersName(previousPlayerNamesObject => {
+      
+      return {
+        ...previousPlayerNamesObject,
+        ["X"]: "Player 1",
+        ["O"]: "Player 2",
+      }
+
+    });
   
-  // TO DO:
-  // HAVING ONLY ONE STATE IN APP.JS & DERIVE CURRENT PLAYER FROM PREVIOUS TURNS ✔️
-  // switching between players and changing the player symbol on gameboard effectively, lifting state up 
-  // using turns instead of gameboard data in the App.js file
-  // a log component to log player actions ✔️
-  // recognizing when the game is over
-  // overlaying when the game is over, either when there's a draw or a winner
-  // minimize / externalize codes
+  }
+  
   return (
     <main>
       <div id="game-container">
 
+        {/* Game Over - display if the game is over*/}
+        {(isWinner || isDraw) && <Gameover gameEndObject={gameEndObject} handleNewGame={handleNewGame}></Gameover>}
+
         {/* Player Information Area */}
         <ol id="players" className="highlight-player">
           {/*  List of Players displayed as flex box*/}
-          <Player playerName={playersDetails.X} playerSymbol="X" activePlayer={playersDetails.currentPlayerSymbol}/>
-          <Player playerName={playersDetails.O} playerSymbol="O" activePlayer={playersDetails.currentPlayerSymbol}/>
+          <Player playerName={{...playersNames}.X} playerSymbol="X" activePlayer={currentPlayerSymbol} handleNewPlayerName={handleNewPlayerName}/>
+          <Player playerName={{...playersNames}.O} playerSymbol="O" activePlayer={currentPlayerSymbol} handleNewPlayerName={handleNewPlayerName}/>
         </ol>
 
         <ol id="game-board">
@@ -278,7 +256,7 @@ function App() {
       </div>
 
       <ol id="log">
-          <Log turns={turns.each}></Log>          
+          <Log turns={turns.each} playersNames={playersNames}></Log>          
       </ol>
 
     </main>
