@@ -14,5 +14,3 @@ export default function toPascalCase(someString) {
 
   return someStringPascalCase.substring(0, lengthOfSomeStringPascalCase - 1);
 }
-
-console.log(toPascalCase('hello there'));
