@@ -1,4 +1,6 @@
-import styles from "./Header.module.css"
+import styled from "styled-components";
+
+import styles from "./Header.module.css";
 import logo from '../assets/logo.png';
 
 export default function Header() {

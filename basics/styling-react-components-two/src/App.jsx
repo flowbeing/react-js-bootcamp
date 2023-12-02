@@ -5,7 +5,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <main>
+      <main className="rounded-none">
         <AuthInputs />
       </main>
     </>
