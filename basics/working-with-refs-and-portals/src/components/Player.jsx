@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-export default function Player() {
+export default function Player({propOne}) {
   let playerName = useRef();
 
   let [enteredPlayerName, updatePlayerName] = useState();
@@ -19,6 +19,7 @@ export default function Player() {
         <input ref={playerName} type="text" />
         <button onClick={handleButtonClick}>Set Name</button>
       </p>
+      <p>This is a paragrph value: {propOne}</p>
     </section>
   );
 }
