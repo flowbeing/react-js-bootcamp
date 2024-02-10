@@ -5,7 +5,9 @@ export default function AvailablePlaces({ onSelectPlace }) {
 
   const [isError, setIsError] = useState(false);
   const [isFetching, SetIsFetching] = useState(false);
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([])
+
+  
 
   useEffect(() => {
 
@@ -22,6 +24,8 @@ export default function AvailablePlaces({ onSelectPlace }) {
         throw new Error("An error occurs. Could not fetch places!");
       }
 
+      
+
       setPlaces(responseData.places);
         
       }catch(error){
@@ -30,12 +34,31 @@ export default function AvailablePlaces({ onSelectPlace }) {
         
       }
 
-      SetIsFetching(fasle);
+      SetIsFetching(false);
     }
 
     fetchPlaces();
 
   }, []);
+
+  // GEOLOCATION
+  useEffect(() => {
+
+    async function someFunction(){
+    
+      navigator.geolocation.getCurrentPosition((loc) => {
+        console.log(`loc.coords.latitude: ${loc.coords.latitude}`);
+        console.log(`loc.coords.longitude: ${loc.coords.longitude}`);
+      });    
+      
+    }
+
+    console.log("pre someFunction");
+    someFunction();
+    console.log("post someFunction");
+
+  }, []);
+
 
   return (
     <Places
