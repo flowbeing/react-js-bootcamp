@@ -11,7 +11,7 @@ export default function Form(){
         console.log(data);
 
     
-      }
+    }
     
     return (
         <form onSubmit={onSubmitForm}>

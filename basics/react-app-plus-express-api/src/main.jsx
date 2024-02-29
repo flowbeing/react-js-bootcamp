@@ -1,10 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+
+import { Provider } from "react-redux";
+import counterStore from "./store/counterStore.js";
+
 import App from './App.jsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={counterStore}><App /></Provider>
   </React.StrictMode>,
 )
