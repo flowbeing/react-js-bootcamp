@@ -59,7 +59,7 @@ function App() {
 
   return (
     <>
-      <button onClick={() => {counterDispatch(counterActions.increment())}}>Increment Total: {counterValue}</button>
+      <button onClick={() => {counterDispatch(counterActions.increase(10))}}>Increment Total: {counterValue}</button>
       {/* <Form></Form>
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation

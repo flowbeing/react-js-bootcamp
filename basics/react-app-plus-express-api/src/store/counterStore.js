@@ -13,10 +13,10 @@ const counterSlice = createSlice({
       state.total -= 1;
     },
     increase(state, action) {
-      state.total += action.increaseBy;
+      state.total += action.payload;
     },
     decrease(state, action) {
-      state.total -= action.decreaseBy;
+      state.total -= action.payload;
     },
   },
 });
