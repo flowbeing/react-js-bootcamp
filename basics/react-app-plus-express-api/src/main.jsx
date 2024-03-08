@@ -12,4 +12,4 @@ root.render(
   <React.StrictMode>
     <Provider store={counterStore}><App /></Provider>
   </React.StrictMode>,
-)
+);
