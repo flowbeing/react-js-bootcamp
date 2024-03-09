@@ -19,6 +19,7 @@ code {
   display: flex;
   justify-content: center;
   margin: 15px 0;
+  padding: 0;
 }
 
 .main-navigation li{

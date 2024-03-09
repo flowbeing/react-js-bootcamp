@@ -7,13 +7,12 @@ import EventsPage from "./pages/EventsPage";
 
 const router = createBrowserRouter([
   {
-    route: "/",
+    path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Homepage /> },
-      { route: "events", element: <EventsPage /> },
-      // { route: ""}
+      { path: "events", element: <EventsPage /> },
     ],
   },
 ]);
