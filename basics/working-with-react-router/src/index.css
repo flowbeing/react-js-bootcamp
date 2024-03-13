@@ -20,25 +20,75 @@ code {
   justify-content: center;
   margin: 15px 0;
   padding: 0;
+  
 }
 
 .main-navigation li{
   width: 80px;
   margin: 10px; /*5px 10px 5px 10px;*/
-  padding: 5px 10px;
-  background-color: whitesmoke;
+  /* padding: 0; */
+  padding: 10px 10px;
+  background-color: white;
   list-style-type: none;
   text-align: center;
-}
-
-.main-navigation li :link{
+  color: black;
   font-family: monospace;
   font-weight: 600;
-  text-decoration: none;
-  color: black;
+}
+
+.main-navigation li :link, :visited{
   
+  /* display:inline-block; */
+  width: 80px;
+  padding: 10px 10px;
+  margin: 0;
+  background-color: white;
+  color: black;
+  text-decoration: none;
 }
 
 h1 {
   text-align: center;
+  font-family: monospace;
+}
+
+
+.register-form {
+  margin: 0 auto;
+  width: 42.5rem;
+  height: 40rem;
+  padding: 2.5rem 2.5rem;
+  border: 0.2px solid white;
+  /* border-radius: .5rem; */
+  display: flex;
+  justify-content: right;
+}
+
+
+.register-form input{
+  background-color: transparent;
+  opacity: .95;
+  /* display: block; */
+  width: 42.5rem;
+  height: 3rem;
+  margin-bottom: 2.15rem;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  border: 1px dotted white;
+  font-family: monospace;
+  font-weight: normal;
+  font-size: 16px;
+  /* border-radius: .15rem; */
+  color: white;
+  /* line-height: 20px; */
+  
+}
+
+.register-button {
+  width: 10rem;
+  height: 3rem;
+  border: 1px solid white;
+  border-radius: 0px;
+  font-family: monospace;
+  font-weight: bold;
 }
