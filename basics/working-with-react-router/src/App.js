@@ -4,14 +4,21 @@ import RootLayout from "./pages/RootLayout";
 import ErrorPage from "./pages/ErrorPage";
 import Homepage from "./pages/Homepage";
 import EventsPage, { eventsPageAction } from "./pages/EventsPage";
-import RegistrationPage, { registerAction } from "./pages/RegistrationPage";
+import RegistrationPage, {
+  registrationPageLoaderFunction,
+  registrationPageActionFunction,
+} from "./pages/RegistrationPage";
+import MyDetailsPage, {
+  myDetailsActionFunction,
+  myDetailsLoaderFunction,
+} from "./pages/MyDetailsPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    action: registerAction,
+    action: registrationPageActionFunction,
     children: [
       {
         index: true,
@@ -21,7 +28,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegistrationPage />,
-        action: registerAction,
+        // loader: registrationPageLoaderFunction
+        action: registrationPageActionFunction,
+      },
+      {
+        path: "my-details",
+        element: <MyDetailsPage />,
+        loader: myDetailsLoaderFunction,
+        action: myDetailsActionFunction,
       },
     ],
   },

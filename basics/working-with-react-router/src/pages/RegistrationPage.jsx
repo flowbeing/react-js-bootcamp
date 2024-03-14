@@ -1,4 +1,4 @@
-import { Form, useFetcher, useLocation, redirect } from "react-router-dom";
+import { Form, useFetcher, useLocation, redirect, useLoaderData, defer } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function RegistrationPage(){
@@ -55,7 +55,14 @@ export default function RegistrationPage(){
     );
 }
 
-export async function registerAction({request, params}){
+// A LOADER FUNCTION -> CAN BE AN ASYNC FUNCTION
+export function registrationPageLoaderFunction(){
+
+    return Math.round(100);
+}
+
+// AN ACTION FUNCTION -> FOR USE IN A DELCARED ROUTER
+export async function registrationPageActionFunction({request, params}){
 
     const newUserDetails = await request.formData();
 

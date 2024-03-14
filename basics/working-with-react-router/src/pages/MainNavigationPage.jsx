@@ -10,6 +10,7 @@ export default function MainNavigationPage(){
             <li><NavLink to="/" end>Homepage</NavLink></li>
             <li><NavLink to="events">Events</NavLink></li>
             <li><NavLink to="register">Register</NavLink></li>
+            <li><NavLink to="my-details">My Details</NavLink></li>
             {/* <li><NavLink to="events" relative="path">Events</NavLink></li>
             <li><NavLink to="events">Events</NavLink></li> */}
         </ul>
