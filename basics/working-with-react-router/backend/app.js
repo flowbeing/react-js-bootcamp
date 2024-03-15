@@ -18,7 +18,24 @@ app.get("/custom-fetch", (req, res, next) => {
         userAddress: "AddressOne",
       },
     });
-  }, 1000);
+  }, 500);
+});
+
+app.get("/custom-fetch-fast", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  setTimeout(() => {
+    res.status(200).json({
+      status: "success",
+      userDetails: {
+        userFirstName: "Dan",
+        userLastName: "Oye",
+        userEmail: "email@example.com",
+        userOrganizationName: "OrganizationOne",
+        userAddress: "AddressOne",
+      },
+    });
+  }, 0);
 });
 
 app.listen(8080, "127.0.0.1", () => {

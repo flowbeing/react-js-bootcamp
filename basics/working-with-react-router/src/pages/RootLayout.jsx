@@ -10,8 +10,9 @@ export default function RootLayout(){
     return(
         <>
             <MainNavigationPage/>
-            <p style={{textAlign:"center", fontWeight: "bold",  fontFamily: "monospace"}}>Active Link: {location.pathname}</p> 
+            <p style={{textAlign:"center", fontWeight: "bold",  fontFamily: "monospace"}}>Active Route: {location.pathname}</p> 
             <Outlet/>
         </>
     );
+    
 }

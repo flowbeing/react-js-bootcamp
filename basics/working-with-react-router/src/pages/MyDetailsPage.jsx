@@ -1,99 +1,128 @@
-import { Form, useFetcher, useLoaderData, defer, Await, json } from "react-router-dom";
-import { Suspense, useEffect, Fragment } from "react";
+import { Form, useFetcher, useLoaderData, defer, Await, json, Navigation } from "react-router-dom";
+import { Suspense, useEffect, Fragment, useCallback } from "react";
 
 import MyDetailsPageForm from "../components/MyDetailsPageForm";
+import util, { promisify } from "util";
 
 export default function MyDetailsPage(){
 
     const loaderData = useLoaderData();
     // const { userFirstName, userLastName, userEmail, userOrganizationName, userAddress } = loaderData;
-    const userDetailsLoaderData = loaderData.userDetails;
+    const {userDetails, userDetailsFast} = loaderData;
+
+    // console.log(`userDetailsFast: ${Object.keys(userDetailsFast)}`);
 
     const fetcher = useFetcher();
     const { data, state } = fetcher;
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        console.log(`myDetailsPageAction data: ${data}, myDetailsPageAction state: ${state}`);
-        console.log(`myDetailsPageLoader data: ${userDetailsLoaderData}, type: ${typeof(loaderData)}`);
-        console.log(`defered loader data: keys: ${Object.keys(loaderData)}`);
-        console.log(Object.keys(loaderData).map(key => loaderData[key]));
-        // console.log(`${ userFirstName }, ${ userLastName}, ${userEmail}, ${userOrganizationName}, ${userAddress }`)
+    //     console.log(`myDetailsPageAction data: ${data}, myDetailsPageAction state: ${state}`);
+    //     console.log(`myDetailsPageLoader data: ${userDetailsLoaderData}, type: ${typeof(loaderData)}`);
+    //     console.log(`defered loader data: keys: ${Object.keys(loaderData)}`);
+    //     console.log(Object.keys(loaderData).map(key => loaderData[key]));
+    //     // console.log(`${ userFirstName }, ${ userLastName}, ${userEmail}, ${userOrganizationName}, ${userAddress }`)
 
-    }, [data, state]);
+    // }, [data, state]);
 
+    async function getUserDetailsAsync(){
+
+            const response = await fetch("http://127.0.0.1:8080/custom-fetch");
+
+            if (!response.ok) throw new Error ("An error occured while fetching user details");
+
+            const responseData = await response.json();
+            const userDetails = responseData.userDetails;
+            
+            console.log(`userDetails in getUserDetailsAsync: ${userDetails}`);
+
+            return userDetails;
+
+    }
+        
+    // new Promise((resolve, reject) => resolve({userFirstName: 'Dan', userLastName: 'Oye', userEmail: 'email@example.com', userOrganizationName: 'OrganizationOne', userAddress: 'AddressOne'}))
 
     return (
-            <Suspense fallback={<p>Loading..</p>}>
-                <Await resolve={userDetailsLoaderData}>
-                    { userDetailsInfo => 
-                        // console.log(
-                        //     userDetailsInfo.userFirstName,
-                        //     userDetailsInfo.userLastName,
-                        //     userDetailsInfo.userEmail,
-                        //     userDetailsInfo.userOrganizationName,
-                        //     userDetailsInfo.userAddress
-                        // );
+            <>
+                <Suspense>
+                    <Await resolve={userDetailsFast}>
+                        {userDetailsFastResolved => <p>{userDetailsFastResolved.userFirstName}</p>}
+                    </Await>
+                </Suspense>
+                <Suspense fallback={<h1 style={{textAlign: "center", fontFamily: "monospace", fontWeight: "bold"}}>Loading..</h1>}>
+                    {/* userDetailsLoaderData */}
+                    <Await resolve={userDetails}> 
+                        { userDetailsInfo => 
+                            // console.log(
+                            //     userDetailsInfo.userFirstName,
+                            //     userDetailsInfo.userLastName,
+                            //     userDetailsInfo.userEmail,
+                            //     userDetailsInfo.userOrganizationName,
+                            //     userDetailsInfo.userAddress
+                            // );
 
-                        // return <MyDetailsPageForm 
-                        //     userFirstName={userDetailsInfo.userFirstName}
-                        //     userLastName={userDetailsInfo.userLastName}
-                        //     userEmail={userDetailsInfo.userEmail}
-                        //     userOrganizationName={userDetailsInfo.userOrganizationName}
-                        //     userAddress={userDetailsInfo.userAddress}
-                        // /> 
+                            // return <MyDetailsPageForm 
+                            //     userFirstName={userDetailsInfo.userFirstName}
+                            //     userLastName={userDetailsInfo.userLastName}
+                            //     userEmail={userDetailsInfo.userEmail}
+                            //     userOrganizationName={userDetailsInfo.userOrganizationName}
+                            //     userAddress={userDetailsInfo.userAddress}
+                            // /> 
 
-                        (
-                            <>
-                                <h1>My Stored Details Page</h1>
-                                <div style={{ display: "flex", justifyContent: "center"}}>
-                                    <button 
-                                        style={{ 
-                                            width: "16rem", 
-                                            // height: "1.7rem", 
-                                            // margin: "0 auto",
-                                            marginBottom: "1rem",
-                                            padding: ".5rem 0rem",
-                                            border: "1px solid transparent",
-                                            // borderTop: "1px solid white",
-                                            fontFamily: "monospace",
-                                            fontWeight: "bold",
-                                            // textDecoration: "overline",
-                                            background: "transparent",
-                                            color: "white",
-                                        }}
-                                    >
-                                            Using React Router "defer" Hook - Update Your Details Here 🎉
-                                    </button>
-                                </div>
-                                <div className="register-form">
-                                    <fetcher.Form method="POST">
-                                        {/* <label>First Name</label> */}
-                                        <input type="text" name="first-name" defaultValue={userDetailsInfo.userFirstName}/>
-                                        <input type="text" name="last-name" defaultValue={userDetailsInfo.userLastName}/>
-                                        <input type="text" name="email" defaultValue={userDetailsInfo.userEmail}/>
-                                        <input type="text" name="organization-name" defaultValue={userDetailsInfo.userOrganizationName}/>
-                                        <input type="text" name="address" defaultValue={userDetailsInfo.userAddress}/>
+                            (
+                                <>
+                                    <h1>My Stored Details Page</h1>
+                                    <div style={{ display: "flex", justifyContent: "center"}}>
+                                        <button 
+                                            style={{ 
+                                                width: "16rem", 
+                                                // height: "1.7rem", 
+                                                // margin: "0 auto",
+                                                marginBottom: "1rem",
+                                                padding: ".5rem 0rem",
+                                                border: "1px solid transparent",
+                                                // borderTop: "1px solid white",
+                                                fontFamily: "monospace",
+                                                fontWeight: "bold",
+                                                // textDecoration: "overline",
+                                                background: "transparent",
+                                                color: "white",
+                                            }}
+                                        >
+                                                Using React Router "defer" Hook - Update Your Details Here 🎉
+                                        </button>
+                                    </div>
+                                    <div className="register-form">
+                                        <fetcher.Form method="POST">
+                                            {/* <label>First Name</label> */}
+                                            <input type="text" name="first-name" defaultValue={userDetailsInfo.userFirstName}/>
+                                            <input type="text" name="last-name" defaultValue={userDetailsInfo.userLastName}/>
+                                            <input type="text" name="email" defaultValue={userDetailsInfo.userEmail}/>
+                                            <input type="text" name="organization-name" defaultValue={userDetailsInfo.userOrganizationName}/>
+                                            <input type="text" name="address" defaultValue={userDetailsInfo.userAddress}/>
 
-                                        <div style={{display:"flex", justifyContent:"right"}}>
-                                            <button className="register-button">Submit</button>
-                                        </div>
-                                    </fetcher.Form>
-                                </div>
-                            </>
-                        )
+                                            <div style={{display:"flex", justifyContent:"right"}}>
+                                                <button className="register-button">Submit</button>
+                                            </div>
+                                        </fetcher.Form>
+                                    </div>
+                                </>
+                            )
 
-                        
-                    }
-                </Await>
-            </Suspense>
+                            
+                        }
+                    </Await>
+                </Suspense>
+            </>
     );
 }
 
 // THIS ASYNC LOADER FUNCTION WOULD IDEALLY CONTAIN AN AWAITED ASYNC FETCH FUNCTION THAT WOULD RETURN DATA
 // E.G A FETCH FUNCTION THAT WOULD RETURN A PREF
-async function myDetailsLoaderFunctionAsync() {
+async function myDetailsLoaderFunctionAsync(
+    isFast = false
+) {
 
     // const t = new Promise ((response, reject) => { return response("a response")});
     // await setTimeout(() => {}, 5000);
@@ -108,16 +137,22 @@ async function myDetailsLoaderFunctionAsync() {
 
     // await setTimeout(() => {}, 5000);
 
+    let additionalUrlText = "";
+
+    if (isFast){
+        additionalUrlText = "-fast";
+    }
+
     try{
 
-        const response = await fetch("http://127.0.0.1:8080/custom-fetch");
+        const response = await fetch("http://127.0.0.1:8080/custom-fetch" + additionalUrlText);
 
         if (!response.ok) {
             throw new Error("An error occured while fetching user's details");
         }
         else {
             const result = await response.json();
-            console.log(`result: ${result.userDetails}`);
+            console.log(`result (loader): ${result.userDetails}`);
             return result.userDetails;
         }
 
@@ -129,10 +164,11 @@ async function myDetailsLoaderFunctionAsync() {
 }
 
 // A LOADER FUNCTION
-export function myDetailsLoaderFunction({request, params}) {
+export async function myDetailsLoaderFunction({request, params}) {
 
     // feels useless
     return defer({
+        userDetailsFast: await myDetailsLoaderFunctionAsync(true),
         userDetails: myDetailsLoaderFunctionAsync()
     });
 
