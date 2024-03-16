@@ -55,8 +55,8 @@ h1 {
 
 .register-form {
   margin: 0 auto;
-  width: 42.5rem;
-  height: 40rem;
+  max-width: 42.5rem;
+  max-height: 40rem;
   padding: 2.5rem 2.5rem;
   border: 0.2px solid white;
   /* border-radius: .5rem; */
@@ -68,7 +68,7 @@ h1 {
 .register-form input{
   background-color: transparent;
   opacity: .95;
-  /* display: block; */
+  display: block;
   width: 42.5rem;
   height: 3rem;
   margin-bottom: 2.15rem;
