@@ -84,11 +84,15 @@ h1 {
   
 }
 
-.register-button {
+.auth-or-submit-button-and-feedback {
   width: 10rem;
   height: 3rem;
   border: 1px solid white;
   border-radius: 0px;
   font-family: monospace;
   font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

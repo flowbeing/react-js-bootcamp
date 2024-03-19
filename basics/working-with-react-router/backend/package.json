@@ -4,10 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "*"
+    "cookie-parser": "^1.4.6",
+    "cookies-parser": "^1.2.0",
+    "express": "*",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0"
   },
   "author": "",
   "license": "ISC"
