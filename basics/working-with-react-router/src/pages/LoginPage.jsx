@@ -34,7 +34,7 @@ export default function LoginPage(){
     // a template for useMutation -> an optimized react query hook for sending or modifying data e.g fetch('example.com/api/resource', { method: POST })
     const { mutate } = useMutation({
         // queryKey: ['login'] // not necessary since useMutation is optimzed for sending and modifying data in the database but not to recieve data that should be cached
-        queryFn: (anObject) => fetch("http://example.com/api/resource", {method: "POST", data: {}});
+        queryFn: (anObject) => fetch("http://example.com/api/resource", {method: "POST", data: {}})
     })
 
 
