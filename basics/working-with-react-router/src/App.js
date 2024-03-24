@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy } from "react";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import RootLayout from "./pages/RootLayout";
 import ErrorPage from "./pages/ErrorPage";
@@ -80,8 +81,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

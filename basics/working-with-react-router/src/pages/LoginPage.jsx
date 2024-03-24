@@ -8,34 +8,50 @@ export default function LoginPage(){
     //
     // const [aSpecificStateForUseInUseQuery, setASpecificStateForUseInUseQuery] = useState();
     //
-    const { tdata, isPending, isLoading, isError } = useQuery({
-            queryKey: ['someFunction'],
-            queryFn: async ({signal}) => { 
+    // const { data, isPending, isLoading, isError, error } = useQuery({
+    //         queryKey: ['someFunction'], // for indexing a useQuery instance along with its data, loading & pending state, and error if any
+    //         queryFn: async ({signal}) => { 
                 
-                try{
+    //             try{
 
-                    const response = await fetch("https://localhost.com/custom-fetch");
+    //                 const response = await fetch("https://localhost.com/custom-fetch");
                 
-                    if (!response.ok) throw new Error("An error occured!");
+    //                 if (!response.ok) throw new Error("An error occured!");
 
-                    const resolvedResponse = await response.json();
-                    return resolvedResponse.data;
+    //                 const resolvedResponse = await response.json();
+    //                 return resolvedResponse.data;
                     
-                }catch(error){
+    //             }catch(error){
                     
-                    throw new Error("An error occured while fetching response!");
+    //                 throw new Error("An error occured while fetching response!");
 
-                }
-            },
-            enabled: true // can be set dynamicaly e.g "aSpecificStateForUseInUseQuery !== undefined"//
-        });
+    //             }
+    //         },
+    //         enabled: true, // can be set dynamicaly e.g "aSpecificStateForUseInUseQuery !== undefined"//
+            
+    //     });
 
 
     // a template for useMutation -> an optimized react query hook for sending or modifying data e.g fetch('example.com/api/resource', { method: POST })
-    const { mutate } = useMutation({
-        // queryKey: ['login'] // not necessary since useMutation is optimzed for sending and modifying data in the database but not to recieve data that should be cached
-        queryFn: (anObject) => fetch("http://example.com/api/resource", {method: "POST", data: {}})
-    })
+    // const { mutate, isPending, isError, error } = useMutation({
+        // mutationKey: ['login'] // not necessary since useMutation is optimzed for sending and modifying data in the database but not to recieve data that should be cached
+    //     mutationFn: (someMeta) => console.log(`someMetaData: ${Object.entries(someMeta)}`),
+    //     onSuccess: () => {},
+    //     onMutate: () => {},
+    //     onSettled: () => {}
+    // });
+
+    // function updateResource(){
+    //     console.log("");
+    //     console.log("mutating");
+    //     mutate({
+    //         data: "mutateData"
+    //         });
+    // }
+
+    // const { isPending, isLoading, isError, error } = useQuery({
+    //     queryFn: (someMap) => Object.keys(someMap).forEach(key => console.log(`${key}: ${someMap[key]}`))
+    // })
 
 
     const params = useParams();
@@ -87,6 +103,7 @@ export default function LoginPage(){
                                 Object.keys(data).length > 0 ? data.status : ""
                         }</div>
                         <button className="auth-or-submit-button-and-feedback">Login</button>
+                        {/* <button className="auth-or-submit-button-and-feedback" onClick={updateResource}>Another Button</button> */}
                     </div>
                 </fetcher.Form>
             </div>
