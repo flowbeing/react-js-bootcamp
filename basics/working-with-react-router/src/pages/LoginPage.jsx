@@ -112,7 +112,12 @@ export default function LoginPage(){
 }
 
 // A LOADER FUNCTION -> CAN BE AN ASYNC FUNCTION
-export function loginPageLoaderFunction(){
+export function loginPageLoaderFunction({request, params}){
+
+    // queryClient.fetchQuery({
+    //     queryKey: ["someQueryKey", {furtherDescriptor: "value"}],
+    //     queryFn: ({queryKey, meta, signal}) => {someFetchFunction({signal, params.id})}
+    // });
 
     return Math.round(100);
 
@@ -166,4 +171,6 @@ export async function loginPageActionFunction({request, params}){
     }catch(error){
         return "Login was not successful!"
     }
+
+    // queryClient.invalidateQueries(queryKey, {furtherDescriptor: value})
 }
