@@ -1,4 +1,4 @@
-import { Form, useFetcher, useLocation, redirect, useLoaderData, defer, useParams } from "react-router-dom";
+import { Form, useFetcher, useLocation, redirect, useLoaderData, useActionData, defer, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
@@ -61,6 +61,11 @@ export default function LoginPage(){
     let { data, state } = fetcher;
 
     if (data == null) data = {};
+
+    // const actionData = useActionData();
+
+    // console.log('actionData:')
+    // console.log(Object.keys(actionData).forEach(key => console.log(`${key}: ${actionData[key]}`)));
 
 
     useEffect(() => {

@@ -69,7 +69,6 @@ app.post("/custom-fetch/:authOperation", (req, res, next) => {
   // IF SIGN UP
   else if (req.params.authOperation === "register") {
     // create a JWT, set authentication to true or false & forward JWT
-    data.message = "Signup Successful";
     authToken = jsonwebtoken.sign(
       { id: "fasdofpasdfj123423" },
       "someTokenKey",
@@ -79,6 +78,7 @@ app.post("/custom-fetch/:authOperation", (req, res, next) => {
       }
     );
     console.log(`authToken: ${authToken}`);
+    data.message = "Signup Successful";
     data.authToken = authToken;
     data.userDetails = req.body;
   }
@@ -90,6 +90,7 @@ app.post("/custom-fetch/:authOperation", (req, res, next) => {
   //   secure: true,
   // });
   setTimeout(() => {
+    console.log("sending response");
     return res
       .status(200)
       .cookie("Set-Cookie", authToken, {
@@ -101,7 +102,7 @@ app.post("/custom-fetch/:authOperation", (req, res, next) => {
         status: "success",
         data: data,
       });
-  }, 2000);
+  }, 20000);
 });
 
 app.get("/custom-fetch", (req, res, next) => {
