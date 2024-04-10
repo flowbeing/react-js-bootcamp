@@ -1,16 +1,65 @@
+import { useRef } from "react";
 import { Link } from 'react-router-dom';
+
+import { motion } from "framer-motion";
+import html2canvas from "html2canvas";
 
 import cityImg from '../assets/city.jpg';
 import heroImg from '../assets/hero.png';
+import cloudMan from "../assets/cloud-man.jpeg";
 
 export default function WelcomePage() {
+
+  const elementToCaptureRef = useRef();
+
+  function captureScreenshot() {
+    var canvasPromise = html2canvas(elementToCaptureRef.current, {
+      dpi: 23040, //11520, // 5760,
+      scale: 10,
+      useCORS: true
+    });
+    canvasPromise.then((canvas)=> {
+      var dataURL = canvas.toDataURL("image/jpeg");
+      
+      // Create an image element from the data URL
+      var img = new Image();
+      img.src = dataURL;
+      img.download = dataURL;
+      // Create a link element
+      var a = document.createElement("a");
+      a.innerHTML = "DOWNLOAD";
+      a.target = "_blank";
+      // Set the href of the link to the data URL of the image
+      a.href = img.src;
+      // Set the download attribute of the link
+      a.download = img.download;
+      // Append the link to the page
+      document.body.appendChild(a);
+      // Click the link to trigger the download
+      a.click();
+    });
+
+  }
+
   return (
     <>
       <header id="welcome-header">
         <div id="welcome-header-content">
           <h1>Ready for a challenge?</h1>
+          <motion.img
+            src={cloudMan} 
+            alt="cloud-man"
+            ref={elementToCaptureRef}
+            style={{ backgroundColor: "white", width: "400px", height: "266px", margin: "0 auto"}}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.4, backgroundColor: "red" }}
+            onTap={() => captureScreenshot()}
+            // while={{ scale: 1 }}
+            drag={true}
+            dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100}}>
+          </motion.img>
           <Link id="cta-link" to="/challenges">
-            Get Started
+              Get Started
           </Link>
         </div>
         <img

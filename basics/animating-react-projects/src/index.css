@@ -63,6 +63,7 @@ body {
 
 #welcome-header-content {
   width: 40rem;
+  border: 1px solid white;
   position: absolute;
   top: 30%;
   left: calc(50% - 20rem);
