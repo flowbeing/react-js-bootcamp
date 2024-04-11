@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 import html2canvas from "html2canvas";
 
+import Tabs from "../components/Tabs";
 import cityImg from '../assets/city.jpg';
 import heroImg from '../assets/hero.png';
 import cloudMan from "../assets/cloud-man.jpeg";
@@ -43,32 +44,9 @@ export default function WelcomePage() {
 
   return (
     <>
-      <header id="welcome-header">
-        <div id="welcome-header-content">
-          <h1>Ready for a challenge?</h1>
-          <motion.img
-            src={cloudMan} 
-            alt="cloud-man"
-            ref={elementToCaptureRef}
-            style={{ backgroundColor: "white", width: "400px", height: "266px", margin: "0 auto"}}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.4, backgroundColor: "red" }}
-            onTap={() => captureScreenshot()}
-            // while={{ scale: 1 }}
-            drag={true}
-            dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100}}>
-          </motion.img>
-          <Link id="cta-link" to="/challenges">
-              Get Started
-          </Link>
-        </div>
-        <img
-          src={cityImg}
-          alt="A city skyline touched by sunlight"
-          id="city-image"
-        />
-        <img src={heroImg} alt="A superhero wearing a cape" id="hero-image" />
-      </header>
+
+      <Tabs title={"tabTitle"} />
+
       <main id="welcome-content">
         <section>
           <h2>There&apos;s never been a better time.</h2>
