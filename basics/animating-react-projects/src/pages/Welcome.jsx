@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 
 import { motion } from "framer-motion";
@@ -42,11 +42,63 @@ export default function WelcomePage() {
 
   }
 
+  const [isActive, setIsActive] = useState({
+    tabOne: true,
+    tabTwo: false,
+    tabThree: false
+  });
+    
+
+  // useEffect(() => {
+  //     if (title=="Success"){
+  //         setIsActive(!isActive);
+  //     }
+
+  //     console.log(`isActive: ${isActive}`);
+
+  // }, []);
+
+  console.log(`isActive: ${isActive}`);
+
+  function isActiveFunction(val){
+
+    if(val == "Success"){
+
+      setIsActive((prevValue) => {
+        // const { tabOne, tabTwo, tabThree } = {...prevValue};
+        return {...prevValue, tabOne:true, tabTwo:false, tabThree:false}
+      });
+      
+    }
+
+    if(val == "In Progress"){
+
+      setIsActive((prevValue) => {
+        // const { tabOne, tabTwo, tabThree } = {...prevValue};
+        return {...prevValue, tabOne:false, tabTwo:true, tabThree:false}
+      });
+      
+    }
+
+    if(val == "Edit"){
+
+      setIsActive((prevValue) => {
+        // const { tabOne, tabTwo, tabThree } = {...prevValue};
+        return {...prevValue, tabOne:false, tabTwo:false, tabThree:true}
+      });
+      
+    }
+  }
+
+
   return (
     <>
-
-      <Tabs title={"tabTitle"} />
-
+      <div style={{display: "flex"}}>
+        <Tabs title={"Success"} isActiveFunction={isActiveFunction } isActive={isActive.tabOne}/>
+        <Tabs title={"In Progress"} isActiveFunction={isActiveFunction} isActive={isActive.tabTwo}/>
+        <Tabs title={"Edit"} isActiveFunction={isActiveFunction} isActive={isActive.tabThree}/>
+      </div>
+      
       <main id="welcome-content">
         <section>
           <h2>There&apos;s never been a better time.</h2>
