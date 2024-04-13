@@ -93,7 +93,7 @@ export default function WelcomePage() {
 
   return (
     <>
-      <div style={{display: "flex"}}>
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
         <Tabs title={"Success"} isActiveFunction={isActiveFunction } isActive={isActive.tabOne}/>
         <Tabs title={"In Progress"} isActiveFunction={isActiveFunction} isActive={isActive.tabTwo}/>
         <Tabs title={"Edit"} isActiveFunction={isActiveFunction} isActive={isActive.tabThree}/>
