@@ -93,11 +93,17 @@ export default function WelcomePage() {
 
   return (
     <>
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Tabs title={"Success"} isActiveFunction={isActiveFunction } isActive={isActive.tabOne}/>
         <Tabs title={"In Progress"} isActiveFunction={isActiveFunction} isActive={isActive.tabTwo}/>
         <Tabs title={"Edit"} isActiveFunction={isActiveFunction} isActive={isActive.tabThree}/>
       </div>
+
+      <motion.div 
+        style={{ width: "200px", height: "200px", backgroundColor: "white", margin: "600px auto 600px" }}
+        initial={{ x: -500, y: -250, rotate: 0 }}
+        animate={{ x: 500, y: [-250, 250, -250, 250, -250, 250, -250, 250, -250, 250, -250, 250], rotate: 360, transition: { duration: 6  }}}
+      />
       
       <main id="welcome-content">
         <section>
