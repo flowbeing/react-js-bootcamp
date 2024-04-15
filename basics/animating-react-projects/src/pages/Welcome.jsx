@@ -101,8 +101,9 @@ export default function WelcomePage() {
 
       <motion.div 
         style={{ width: "200px", height: "200px", backgroundColor: "white", margin: "600px auto 600px" }}
+        variants={{ animate: { x: 500, y: [-250, 250, -250, 250, -250, 250, -250, 250, -250, 250, -250, 250], rotate: 360, transition: { duration: 6  } } }}
         initial={{ x: -500, y: -250, rotate: 0 }}
-        animate={{ x: 500, y: [-250, 250, -250, 250, -250, 250, -250, 250, -250, 250, -250, 250], rotate: 360, transition: { duration: 6  }}}
+        animate="animate"
       />
       
       <main id="welcome-content">
