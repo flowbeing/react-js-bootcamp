@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import html2canvas from "html2canvas";
 
 import Tabs from "../components/Tabs";
@@ -90,6 +90,14 @@ export default function WelcomePage() {
     }
   }
 
+  const [listItems, setListItem] = useState(["itemOne", "itemTwo", "itemThree"]);
+
+  function removeListItem(itemToRemove){
+
+    setListItem(prevListItems => [...prevListItems].filter(item => item != itemToRemove));
+
+  }
+
 
   return (
     <>
@@ -99,13 +107,20 @@ export default function WelcomePage() {
         <Tabs title={"Edit"} isActiveFunction={isActiveFunction} isActive={isActive.tabThree}/>
       </div>
 
-      <motion.div 
-        style={{ width: "200px", height: "200px", backgroundColor: "white", margin: "600px auto 600px" }}
-        variants={{ animate: { x: 500, y: [-250, 250, -250, 250, -250, 250, -250, 250, -250, 250, -250, 250], rotate: 360 } }}
-        initial={{ x: -500, y: -250, rotate: 0 }}
-        animate="animate"
-        transition= {{ duration: 6  }}
-      />
+      <AnimatePresence>
+        <ul>
+          {listItems.map((title) =>  
+              <motion.li 
+                key={title} 
+                onClick={() => removeListItem(title)}
+                whileTap= {{opacity: [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 ], x: [0, -100], transition: { duration: 1}}}
+                style={{ color: "white", listStyleType: "none" }}>
+                    {title}
+              </motion.li>
+            )
+          }
+        </ul>
+      </AnimatePresence>
       
       <main id="welcome-content">
         <section>
