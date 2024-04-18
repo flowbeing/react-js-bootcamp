@@ -113,8 +113,23 @@ export default function WelcomePage() {
               <motion.li 
                 key={title} 
                 onClick={() => removeListItem(title)}
-                whileTap= {{opacity: [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 ], x: [0, -100], transition: { duration: 1}}}
-                style={{ color: "white", listStyleType: "none" }}>
+                drag={true}
+                whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration:  .25}}}
+                style={{
+                  fontFamily: "monospace",
+                  fontWeight: "bold",
+                  backgroundColor: "white", 
+                  color: "black", 
+                  listStyleType: "none", 
+                  width: "20rem", 
+                  height: "3rem", 
+                  marginTop: "1rem", 
+                  borderRadius: "1rem",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}>
                     {title}
               </motion.li>
             )
