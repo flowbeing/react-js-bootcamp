@@ -108,23 +108,23 @@ export default function WelcomePage() {
       </div>
 
       <AnimatePresence>
-        <ul>
+        <ul style={{ width: "100vw", backgroundColor: "transparent"}}>
           {listItems.map((title) =>  
               <motion.li 
                 key={title} 
                 onClick={() => removeListItem(title)}
                 drag={true}
-                whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration:  .25}}}
+                whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration: 0.25, bounce: false}}}
                 style={{
                   fontFamily: "monospace",
                   fontWeight: "bold",
                   backgroundColor: "white", 
                   color: "black", 
                   listStyleType: "none", 
-                  width: "20rem", 
+                  width: "20rem",
                   height: "3rem", 
-                  marginTop: "1rem", 
-                  borderRadius: "1rem",
+                  margin: "1rem auto",
+                  borderRadius: "0.4rem",
                   textAlign: "center",
                   display: "flex",
                   justifyContent: "center",
