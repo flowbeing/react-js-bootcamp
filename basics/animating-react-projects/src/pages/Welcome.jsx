@@ -108,7 +108,7 @@ export default function WelcomePage() {
       </div>
 
       <AnimatePresence>
-        <ul style={{ width: "100vw", backgroundColor: "transparent"}}>
+        <ul style={{ width: "100vw" }}>
           {listItems.map((title) =>  
               <motion.li 
                 key={title} 
