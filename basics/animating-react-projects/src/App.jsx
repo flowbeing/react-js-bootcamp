@@ -1,4 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 
 import WelcomePage from './pages/Welcome.jsx';
 import ChallengesPage from './pages/Challenges.jsx';
@@ -16,8 +18,12 @@ const router = createBrowserRouter([
   { path: '/challenges', element: <ChallengesPage /> },
 ]);
 
+const queryClient = QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+  </QueryClientProvider>;
 }
 
 export default App;
