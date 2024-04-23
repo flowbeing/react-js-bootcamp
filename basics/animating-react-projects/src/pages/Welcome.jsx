@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
 
 import { AnimatePresence, motion } from "framer-motion";
 import html2canvas from "html2canvas";
@@ -10,6 +11,10 @@ import heroImg from '../assets/hero.png';
 import cloudMan from "../assets/cloud-man.jpeg";
 
 export default function WelcomePage() {
+
+  const { data } = useQuery({
+    queryFn: () => { fetch("http://somedomain.com")}
+  });
 
   const elementToCaptureRef = useRef();
 
