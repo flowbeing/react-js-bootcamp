@@ -13,7 +13,10 @@ import cloudMan from "../assets/cloud-man.jpeg";
 export default function WelcomePage() {
 
   const { data } = useQuery({
-    queryFn: () => { fetch("http://somedomain.com")}
+    queryKey: ['initialQuery', {id: 1}],
+    queryFn: () => { fetch("http://somedomain.com")},
+    enabled: true,
+    staleTime: 1000
   });
 
   const elementToCaptureRef = useRef();
