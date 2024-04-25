@@ -116,13 +116,14 @@ export default function WelcomePage() {
       </div>
 
       <AnimatePresence>
-        <ul style={{ width: "100vw" }}>
+        <motion.ul style={{ width: "100vw", transition: { staggerChildren: true }}}>
           {listItems.map((title) =>  
               <motion.li 
                 key={title} 
                 onClick={() => removeListItem(title)}
                 drag={true}
                 whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration: 0.25, bounce: false}}}
+                while
                 style={{
                   fontFamily: "monospace",
                   fontWeight: "bold",
@@ -142,7 +143,7 @@ export default function WelcomePage() {
               </motion.li>
             )
           }
-        </ul>
+        </motion.ul>
       </AnimatePresence>
       
       <main id="welcome-content">
