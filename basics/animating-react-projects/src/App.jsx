@@ -10,15 +10,15 @@ import ErrorPage from "./pages/ErrorPage.jsx";
 const router = createBrowserRouter([
   { path: '/', 
     element: <WelcomePage />,
-    id: "rootId",
-    errorElement: <ErrorPage/>
+    // id: "rootId",
+    // errorElement: <ErrorPage/>
     // loader: noLoaderFunction
     // action: noActionFunction
   },
   { path: '/challenges', element: <ChallengesPage /> },
 ]);
 
-const queryClient = QueryClient();
+const queryClient = new QueryClient();
 
 function App() {
   return <QueryClientProvider client={queryClient}>

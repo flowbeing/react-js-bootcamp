@@ -14,7 +14,7 @@ export default function WelcomePage() {
 
   const { data } = useQuery({
     queryKey: ['initialQuery', {id: 1}],
-    queryFn: () => { fetch("http://somedomain.com")},
+    queryFn: () => { fetch("https://google.com")},
     enabled: true,
     staleTime: 1000
   });
@@ -123,7 +123,7 @@ export default function WelcomePage() {
                 onClick={() => removeListItem(title)}
                 drag={true}
                 whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration: 0.25, bounce: false}}}
-                while
+                whileHover={{ rotate: 360 }}
                 style={{
                   fontFamily: "monospace",
                   fontWeight: "bold",
