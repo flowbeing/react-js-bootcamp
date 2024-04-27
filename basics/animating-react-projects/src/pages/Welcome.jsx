@@ -120,16 +120,19 @@ export default function WelcomePage() {
           {listItems.map((title) =>  
               <motion.li 
                 key={title} 
-                onClick={() => removeListItem(title)}
-                drag={true}
-                whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration: 0.25, bounce: false}}}
-                whileHover={{ rotate: 360 }}
+                // onClick={() => removeListItem(title)}
+                // drag={true}
+                // whileTap= {{opacity: [ 1, 0 ], x: [0, -300], transition: { duration: 0.25, bounce: false}}}
+                // whileHover={{ rotate: 360 }}
+                intial={{ opacity: 0, x: 400 }}
+                animate={{ opacity: 1, x: -400 }}
+                transition={{ duration: 0.3 }}
                 style={{
                   fontFamily: "monospace",
                   fontWeight: "bold",
-                  backgroundColor: "white", 
-                  color: "black", 
-                  listStyleType: "none", 
+                  backgroundColor: "white",
+                  color: "black",
+                  listStyleType: "none",
                   width: "20rem",
                   height: "3rem", 
                   margin: "1rem auto",
